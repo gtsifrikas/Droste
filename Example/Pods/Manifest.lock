@@ -1,10 +1,10 @@
 PODS:
   - Nimble (7.0.2)
   - Quick (1.2.0)
-  - RxCache (1.0.0):
+  - RxCache (0.1.0):
     - RxCocoa (~> 3.0)
     - RxSwift (~> 3.0)
-  - RxCache/Tests (1.0.0):
+  - RxCache/Tests (0.1.0):
     - Nimble
     - Quick
     - RxCocoa (~> 3.0)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Nimble: bfe1f814edabba69ff145cb1283e04ed636a67f2
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
-  RxCache: e9788a2f32fb7ed81203fa8cc51f861ab4250517
+  RxCache: 3276a806d90a1339b53afacee3b9978abddd17e9
   RxCocoa: 84a08739ab186248c7f31ce4ee92d6f8a947d690
   RxSwift: f9de85ea20cd2f7716ee5409fc13523dc638e4e4
   RxTest: 1d00348a7848c91ab5bf5d197d2378aa6b2bb356
