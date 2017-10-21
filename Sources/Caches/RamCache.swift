@@ -14,6 +14,8 @@ public class RamCache<K, V>: Cache where K: Hashable {
     public typealias Key = K
     public typealias Value = V
     
+    public init() {}
+    
     private var storage: [K: V] = [:]
     
     public func get(_ key: K) -> Observable<V?> {
