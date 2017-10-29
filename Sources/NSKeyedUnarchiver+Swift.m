@@ -22,16 +22,4 @@
   return object;
 }
 
-+ (id) unarchiveObjectSafelyWithData:(NSData *)data {
-  id object = nil;
-  
-  @try {
-    object = [self unarchiveObjectWithData:data];
-  } @catch (NSException *exception) {
-    object = nil;
-  }
-  
-  return object;
-}
-
 @end
