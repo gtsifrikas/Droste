@@ -15,7 +15,10 @@ public enum CacheSwitchResult {
     case cacheB
 }
 
-public func switchCaches<A: Cache, B: Cache>(cacheA: A, cacheB: B, switchClosure: @escaping (_ key: A.Key) -> CacheSwitchResult) -> CompositeCache<A.Key, A.Value> where A.Key == B.Key, A.Value == B.Value {
+public func switchCaches<A: Cache, B: Cache>(cacheA: A,
+                                             cacheB: B,
+                                             switchClosure: @escaping (_ key: A.Key) -> CacheSwitchResult)
+    -> CompositeCache<A.Key, A.Value> where A.Key == B.Key, A.Value == B.Value {
     return CompositeCache(
         get: { key in
             switch switchClosure(key) {

@@ -99,7 +99,7 @@ class RetainTests: QuickSpec {
 
                 it("should pass the right value") {
                     let nextValueEvent = composedCacheObserver.events.first!
-                    expect(nextValueEvent.value.element ?? -1).to(equal(cache1ResponseValue))
+                    expect(nextValueEvent.value.element!).to(equal(cache1ResponseValue))
                 }
 
                 it("should not emit stop events") {
@@ -158,7 +158,7 @@ class RetainTests: QuickSpec {
                     expect(subscriptionDisposable.isDisposed).to(beTrue())
                 }
 
-                context("when retaining the composed cache variable") {
+                context("while retaining the composed cache variable") {
                     it("should release the individual caches which composite cache consists of") {
                         expect(cache1).toNot(beNil())
                         expect(cache2).toNot(beNil())
