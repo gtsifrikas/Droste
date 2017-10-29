@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
 
   s.test_spec 'Tests' do |t|
     t.source_files = 'Tests/*.swift', 'Sources/Extensions.swift'
+    t.dependency 'RxSwift', '~> 3.0'
     t.dependency 'Nimble'
     t.dependency 'Quick'
     t.dependency 'RxTest', '~> 3.0'
