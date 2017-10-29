@@ -38,6 +38,9 @@
         "Sources/Extensions.swift"
       ],
       "dependencies": {
+        "RxSwift": [
+          "~> 3.0"
+        ],
         "Nimble": [
 
         ],
