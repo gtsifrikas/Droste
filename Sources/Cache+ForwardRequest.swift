@@ -14,6 +14,9 @@ public extension Cache {
         return CompositeCache(
             get: { key in
                 return self.get(key).startWith(nil)
+                    .distinctUntilChanged({ (previous, current) -> Bool in
+                        return previous == nil && current == nil
+                    })
         },
             set: set,
             clear: clear
