@@ -19,6 +19,6 @@ let key = "Hello"
 
 _ = testCache.set("World", for: key).publish().connect()
 
-_ = testCache.get(key).subscribe(onNext: { (value) in
-    print("\(key) \(value!)")
+_ = testCache.get(key).subscribe(onNext: { (value: String) in
+    print("\(key) \(value)")
 })

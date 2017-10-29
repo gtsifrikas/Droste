@@ -9,9 +9,8 @@
 import Foundation
 import UIKit
 import RxSwift
-import RxCocoa
 
-public class NetworkFetcher: Fetcher {
+class NetworkFetcher: Fetcher {
     
     public typealias Key = URLRequest
     public typealias Value = NSData
