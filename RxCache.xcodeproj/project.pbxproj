@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		28F828811C494B2C00330CF4 /* RxCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F828801C494B2C00330CF4 /* RxCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		28F828881C494B2C00330CF4 /* RxCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F8287D1C494B2C00330CF4 /* RxCache.framework */; };
+		C603522F1FA5FB9E00C23D82 /* SalientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C603522C1FA5FB0D00C23D82 /* SalientTests.swift */; };
+		C60352321FA606B500C23D82 /* ForwardRequestOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60352301FA606AF00C23D82 /* ForwardRequestOperatorTests.swift */; };
 		C61BFF761FA3879E00688C2F /* SkipWhileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62BBFF71FA385C0000265CA /* SkipWhileTests.swift */; };
 		C6775D511F9B94CF0004AE11 /* Cache+ReuseInFlight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775D431F9B94CD0004AE11 /* Cache+ReuseInFlight.swift */; };
 		C6775D521F9B94CF0004AE11 /* Cache+SkipWhile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775D441F9B94CD0004AE11 /* Cache+SkipWhile.swift */; };
@@ -55,6 +57,8 @@
 		28F828871C494B2C00330CF4 /* RxCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F8288E1C494B2C00330CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28F8289B1C494BF100330CF4 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Playground.playground; path = Example/Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		C603522C1FA5FB0D00C23D82 /* SalientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalientTests.swift; sourceTree = "<group>"; };
+		C60352301FA606AF00C23D82 /* ForwardRequestOperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardRequestOperatorTests.swift; sourceTree = "<group>"; };
 		C62BBFF71FA385C0000265CA /* SkipWhileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkipWhileTests.swift; sourceTree = "<group>"; };
 		C6775D431F9B94CD0004AE11 /* Cache+ReuseInFlight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cache+ReuseInFlight.swift"; sourceTree = "<group>"; };
 		C6775D441F9B94CD0004AE11 /* Cache+SkipWhile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cache+SkipWhile.swift"; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 				28F8288E1C494B2C00330CF4 /* Info.plist */,
 				C6775D731F9B95390004AE11 /* RxCacheTests-Bridging-Header.h */,
 				C62BBFF71FA385C0000265CA /* SkipWhileTests.swift */,
+				C603522C1FA5FB0D00C23D82 /* SalientTests.swift */,
+				C60352301FA606AF00C23D82 /* ForwardRequestOperatorTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -344,12 +350,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C603522F1FA5FB9E00C23D82 /* SalientTests.swift in Sources */,
 				C6775D791F9B953A0004AE11 /* RetainTests.swift in Sources */,
 				C6FAD4D91F9BACC30057A9B6 /* Extensions.swift in Sources */,
 				C6775D7C1F9B953A0004AE11 /* DiskCacheTests.swift in Sources */,
 				C6775D7A1F9B953A0004AE11 /* ReuseInFlightTests.swift in Sources */,
 				C6775D7B1F9B953A0004AE11 /* CacheFake.swift in Sources */,
 				C6775D7D1F9B953A0004AE11 /* CompositionTests.swift in Sources */,
+				C60352321FA606B500C23D82 /* ForwardRequestOperatorTests.swift in Sources */,
 				C61BFF761FA3879E00688C2F /* SkipWhileTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
