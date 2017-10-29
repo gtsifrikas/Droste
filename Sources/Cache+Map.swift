@@ -17,11 +17,10 @@ extension Cache {
             return CompositeCache(
                 get: { (key) -> Observable<V2?> in
                     return self.get(key).map { (originalValue: Value?) -> V2? in
-                        if originalValue == nil {
-                            return nil
-                        } else {
-                            return try f(originalValue!)
+                        if let originalValue = originalValue {
+                            return try f(originalValue)
                         }
+                        return nil
                     }
             },
                 set: {value, key in
