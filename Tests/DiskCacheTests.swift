@@ -11,7 +11,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-import RxCache
+@testable import RxCache
 
 private func filesInDirectory(directory: String) -> [String] {
     let result = (try? FileManager.default.contentsOfDirectory(atPath: directory)) ?? []

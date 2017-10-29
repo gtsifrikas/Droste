@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "693B710EC96C90CB83FDAAF367E9CC65"
+               BlueprintIdentifier = "8ACFF28813339D155092BB7B679A326D"
                BuildableName = "RxCache-Unit-Tests.xctest"
                BlueprintName = "RxCache-Unit-Tests"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,14 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      disableMainThreadChecker = "YES"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "693B710EC96C90CB83FDAAF367E9CC65"
+               BlueprintIdentifier = "8ACFF28813339D155092BB7B679A326D"
                BuildableName = "RxCache-Unit-Tests.xctest"
                BlueprintName = "RxCache-Unit-Tests"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -57,7 +59,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "693B710EC96C90CB83FDAAF367E9CC65"
+            BlueprintIdentifier = "8ACFF28813339D155092BB7B679A326D"
             BuildableName = "RxCache-Unit-Tests.xctest"
             BlueprintName = "RxCache-Unit-Tests"
             ReferencedContainer = "container:Pods.xcodeproj">
