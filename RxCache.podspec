@@ -18,7 +18,6 @@ Pod::Spec.new do |s|
   s.tvos.deployment_target = '9.0'
 
   s.dependency 'RxSwift', '~> 3.0'
-  s.dependency 'RxCocoa', '~> 3.0'
 
   s.test_spec 'Tests' do |t|
     t.source_files = 'Tests/*.swift', 'Sources/Extensions.swift'

@@ -28,6 +28,23 @@ import var Foundation.NSURLErrorDomain
 import RxSwift
 #endif
 
+import struct Foundation.URLRequest
+
+/// Simple logging settings for RxCocoa library.
+public struct Logging {
+    public typealias LogURLRequest = (URLRequest) -> Bool
+    
+    /// Log URL requests to standard output in curl format.
+    public static var URLRequests: LogURLRequest =  { _ in
+        #if DEBUG
+            return true
+        #else
+            return false
+        #endif
+    }
+}
+
+
 /// RxCocoa URL errors.
 public enum RxCocoaURLError
     : Swift.Error {

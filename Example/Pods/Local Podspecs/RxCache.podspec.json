@@ -27,9 +27,6 @@
   "dependencies": {
     "RxSwift": [
       "~> 3.0"
-    ],
-    "RxCocoa": [
-      "~> 3.0"
     ]
   },
   "testspecs": [
