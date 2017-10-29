@@ -22,5 +22,3 @@ _ = testCache.set("World", for: key).publish().connect()
 _ = testCache.get(key).subscribe(onNext: { (value) in
     print("\(key) \(value!)")
 })
-
-
