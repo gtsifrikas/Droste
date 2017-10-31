@@ -33,6 +33,7 @@
 		C6775D7C1F9B953A0004AE11 /* DiskCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775D771F9B953A0004AE11 /* DiskCacheTests.swift */; };
 		C6775D7D1F9B953A0004AE11 /* CompositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775D781F9B953A0004AE11 /* CompositionTests.swift */; };
 		C68A01EC1FA5F36B000DC341 /* Cache+Salient.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68A01EB1FA5F36B000DC341 /* Cache+Salient.swift */; };
+		C68EFD3A1FA73BBB00236C52 /* SwitchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C68EFD391FA73BBB00236C52 /* SwitchTests.swift */; };
 		C6A4EC741F9B997900BD60DA /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6A4EC751F9B997900BD60DA /* RxSwift.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		C6A4EC811F9B9E9300BD60DA /* ConcurrentDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A4EC801F9B9E9300BD60DA /* ConcurrentDictionary.swift */; };
 		C6A4EC841F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4EC821F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h */; };
@@ -83,6 +84,7 @@
 		C6775D771F9B953A0004AE11 /* DiskCacheTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskCacheTests.swift; sourceTree = "<group>"; };
 		C6775D781F9B953A0004AE11 /* CompositionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositionTests.swift; sourceTree = "<group>"; };
 		C68A01EB1FA5F36B000DC341 /* Cache+Salient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cache+Salient.swift"; sourceTree = "<group>"; };
+		C68EFD391FA73BBB00236C52 /* SwitchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchTests.swift; sourceTree = "<group>"; };
 		C6A4EC731F9B995100BD60DA /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6A4EC751F9B997900BD60DA /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6A4EC801F9B9E9300BD60DA /* ConcurrentDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcurrentDictionary.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				C603522C1FA5FB0D00C23D82 /* SalientTests.swift */,
 				C60352301FA606AF00C23D82 /* ForwardRequestOperatorTests.swift */,
 				C60352351FA6107200C23D82 /* MapTests.swift */,
+				C68EFD391FA73BBB00236C52 /* SwitchTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				C6775D7B1F9B953A0004AE11 /* CacheFake.swift in Sources */,
 				C60352371FA615B400C23D82 /* MapTests.swift in Sources */,
 				C6775D7D1F9B953A0004AE11 /* CompositionTests.swift in Sources */,
+				C68EFD3A1FA73BBB00236C52 /* SwitchTests.swift in Sources */,
 				C60352321FA606B500C23D82 /* ForwardRequestOperatorTests.swift in Sources */,
 				C61BFF761FA3879E00688C2F /* SkipWhileTests.swift in Sources */,
 			);
