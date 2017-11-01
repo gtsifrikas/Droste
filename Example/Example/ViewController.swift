@@ -16,26 +16,14 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let diskCache = DiskCache<String, UIImage>()
         
-        let networkImageFetcher = NetworkFetcher()
-            .mapValues(
-                f: { (data) -> UIImage in
-                    return UIImage(data: data as Data)!
-            }) { (_) -> NSData in
-                NSData()
-            }
-            .mapKeys { (url: String) -> URLRequest in
-                URLRequest(url: URL(string: url)!)
-        }
-        
-        let imageCache = diskCache + networkImageFetcher
+        let imageCache = Caches.sharedImageCache
         
         imageCache
-            .get("https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")
+            .get(URL(string: "https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")!)
             .observeOn(MainScheduler.instance)
-            .subscribe(onNext: {[unowned self] (image) in
-                self.imageView.image = image
+            .subscribe(onNext: {[weak self] (image) in
+                self?.imageView.image = image
             })
             .disposed(by: disposeBag)
     }

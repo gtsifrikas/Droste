@@ -12,6 +12,7 @@ public struct Caches {
     
     public static var sharedDataCache = dataCache()
     public static var sharedJSONCache = jsonCache()
+    public static var sharedImageCache = imageCache()
     
     public static func dataCache() -> CompositeCache<URL, NSData> {
         let networkFetcher = NetworkFetcher()
@@ -38,5 +39,15 @@ public struct Caches {
                           options: [])
                     as NSData
             })
+    }
+    
+    public static func imageCache() -> CompositeCache<URL, UIImage> {
+        return dataCache()
+            .mapValues(
+                f: { (data) -> UIImage in
+                    return UIImage(data: data as Data)!
+            }) { (image) -> NSData in
+                return UIImagePNGRepresentation(image) as! NSData
+            }
     }
 }
