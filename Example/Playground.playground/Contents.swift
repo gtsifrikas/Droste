@@ -26,6 +26,12 @@ _ = testCache.get(key).subscribe(onNext: { (value: String) in
     print("\(key) \(value)")
 })
 
+Caches.sharedImageCache
+    .get(URL(string: "https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")!)
+    .observeOn(MainScheduler.instance)
+    .subscribe(onNext: {(image) in
+        let exampleImage = image
+    })
 
 
 let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
