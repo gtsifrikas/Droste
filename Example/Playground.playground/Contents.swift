@@ -14,16 +14,11 @@ import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-var str = "Hello, playground"
-
 let testCache = RamCache<String, String>()
-
 let key = "Hello"
-
 _ = testCache.set("World", for: key).publish().connect()
-
 _ = testCache.get(key).subscribe(onNext: { (value: String) in
-    print("\(key) \(value)")
+    let result = "\(key) \(value)"
 })
 
 Caches.sharedImageCache
@@ -38,5 +33,7 @@ let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revi
 Caches
     .sharedJSONCache
     .get(url)
-    .subscribe(onNext: { print($0 as Any) })
+    .subscribe(onNext: { (jsonObject) in
+        let object = jsonObject
+    })
 
