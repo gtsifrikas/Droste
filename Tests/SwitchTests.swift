@@ -36,6 +36,17 @@ class SwitchTests: QuickSpec {
                 finalCache = switchCache(cacheA: cache1, cacheB: cache2, switchClosure: { _ in choosenCache })
             }
             
+            context("when calling clear") {
+                beforeEach {
+                    finalCache.clear()
+                }
+                
+                it("should call clear in both caches") {
+                    expect(cache1.numberOfTimesCalledClear) == 1
+                    expect(cache2.numberOfTimesCalledClear) == 1
+                }
+            }
+            
             context("when calling get") {
                 beforeEach {
                     scheduler.scheduleAt(10, action: {
@@ -107,19 +118,6 @@ class SwitchTests: QuickSpec {
                         expect(cache1.numberOfTimesCalledSet).to(equal(0))
                         expect(cache2.numberOfTimesCalledSet).to(equal(1))
                         expect(cache2.didCalledSetWithValue).to(equal(1))
-                    }
-                }
-            }
-            
-            context("when calling clear") {
-                beforeEach {
-                    beforeEach {
-                        finalCache.clear()
-                    }
-                    
-                    it("should call clear in both caches") {
-                        expect(cache1.numberOfTimesCalledClear) == 1
-                        expect(cache2.numberOfTimesCalledClear) == 1
                     }
                 }
             }
