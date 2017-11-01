@@ -10,6 +10,9 @@
 import UIKit
 import RxSwift
 import RxCache
+import PlaygroundSupport
+
+PlaygroundPage.current.needsIndefiniteExecution = true
 
 var str = "Hello, playground"
 
@@ -22,3 +25,12 @@ _ = testCache.set("World", for: key).publish().connect()
 _ = testCache.get(key).subscribe(onNext: { (value: String) in
     print("\(key) \(value)")
 })
+
+
+
+let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
+Caches
+    .sharedJSONCache
+    .get(url)
+    .subscribe(onNext: { print($0 as Any) })
+
