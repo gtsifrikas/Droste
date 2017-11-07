@@ -28,16 +28,10 @@ public struct Caches {
         return dataCache()
             .mapValues(f: { (data) -> AnyObject in
                 //convert NSData to json object
-                return try JSONSerialization
-                    .jsonObject(with: data as Data,
-                                options: [.allowFragments])
-                    as AnyObject
+                return try JSONSerialization.jsonObject(with: data as Data, options: [.allowFragments]) as AnyObject
             }, fInv: { (object) -> NSData in
                 //convert json object to NSData
-                return try JSONSerialization
-                    .data(withJSONObject: object,
-                          options: [])
-                    as NSData
+                return try JSONSerialization.data(withJSONObject: object, options: []) as NSData
             })
     }
     

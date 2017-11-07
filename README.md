@@ -11,9 +11,9 @@
 
 ## Introduction
 
-RxCache is a composable cache library which leverates RxSwift's `Observable` for it's API.
+RxCache is a lightweight composable cache library which leverates RxSwift's `Observable` for it's API.
 
-
+- [Example usage](#example-usage)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -22,32 +22,177 @@ RxCache is a composable cache library which leverates RxSwift's `Observable` for
 - [Credits](#credits)
 - [License](#license)
 
-<!-- <img src="Example/RxCache.gif" width="300"/> -->
-
 ## Example usage
 
+### Using out of the box caches
 ```swift
 import RxCache
 
 let aDisposeBag = DisposeBag()
+let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
+
+Caches
+    .sharedJSONCache
+    .get(url)
+    .subscribe(onNext: { jsonObject in
+        //use jsonObject
+    }).disposed(by: aDisposeBag)
+
+```
+
+### Or composing your own cache
+```swift
+import RxCache
+
+let aDisposeBag = DisposeBag()
+let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
 
 let networkFetcher = NetworkFetcher()
     .mapKeys { (url: URL) -> URLRequest in //map url to urlrequest
         return URLRequest(url: url)
     }
+
 let diskCache = DiskCache<URL, NSData>()
 let ramCache = RamCache<URL, NSData>()
 
-let cache = ramCache + (diskCache + networkFetcher).reuseInFlight() 
-//.reuseInFlight() concetrates all requests under one request if they have matching keys and the first request hasn't yet finished.
+let dataCache = ramCache + (diskCache + networkFetcher).reuseInFlight() 
+let jsonCache = dataCache
+            .mapValues(f: { (data) -> AnyObject in
+                //convert NSData to json object
+                return try JSONSerialization.jsonObject(with: data as Data, options: [.allowFragments]) as AnyObject
+            }, fInv: { (object) -> NSData in
+                //convert json object to NSData
+                return try JSONSerialization.data(withJSONObject: object, options: []) as NSData
+            })
 
-let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
+jsonCache
+    .get(url)
+    .subscribe(onNext: { jsonObject in
+        //use jsonObject
+    }).disposed(by: aDisposeBag)
 
-cache.get(url)
-.subscribe(onNext: { (data: NSData) in
-    //use data
-}).disposed(by: aDisposeBag)
+```
 
+## Features
+- [x] [Out of the box support for UIImage, JSON, NSData](#out-of-the-box)
+- [x] [Combine caches easily (e.g. ram + disk + network)](#compose-caches)
+- [x] [Because `.get` returns a `Cancelable` when you subscribe, you can cancel the request anytime](#cancel-requests)
+- [x] [Combine different type of caches by mapping the value of caches using `.mapValues` and the key using `.mapKeys`](#map-values-and-keys)
+- [x] When a cache succeds, informs all the higher level caches to set the new value
+- [x] [Forward request to a lower level cache even if the value exists by using `.forwardRequest` operator](#forward-request)
+- [x] [Create conditional combining of caches in runtime by using the `.switchCache` operator](#switch-cache)
+- [x] [If the request is expensive you can consolidate requests that have the same key and the first request is not done yet, using the `.reuseInFlight` operator](#reuse-in-flight)
+- [x] [Skip a cache in runtime depending on a condition, using the `.skipWhile` operator](#skip-while)
+- [x] [Proper error handling through `Observable` chain](#error-handling)
+- [x] [Salient .get if you want the lack of a value to be treated as error](#salient-get)
+
+### Out of the box
+We provide some singletons of caches that are ready for use.
+* `Caches.sharedJSONCache` takes URL and returns AnyObject which could be either array or dictionary depending of the endpoint's response
+* `Caches.sharedDataCache` takes URL and returns NSData
+* `Caches.sharedImageCache` takes URL and returns UIImage
+
+### Compose caches
+You can compose different type of caches, such as a composition of ram cache with a disk cache backed by a network fetcher.
+To compose two caches or more you can use the `.compose` or `+` operator.
+
+#### Example
+```swift
+let ramCache = RamCache<URL, NSData>()
+let diskCache = DiskCache<URL, NSData>()
+
+//First asks the ram cache and if it fails it asks the disk cache
+let ramDiskCache = ramCache.compose(other: diskCache)
+
+//The same but using the + operator
+let ramDiskCache = ramCache + diskCache
+```
+
+### Cancel Requests
+The fact that RxCache is written using RxSwift it give us some extra functionality such as canceling requests.
+
+#### Example with `DisposeBag`
+```swift
+var aDisposeBag = DisposeBag()
+
+let diskCache = DiskCache<URL, NSData>()
+let networkFetcher = NetworkFetcher<URL, NSData>()
+
+let diskNetworkCache = diskCache + networkFetcher
+diskNetworkCache
+    .get("a url")
+    .subscribe(onNext: { response in
+
+    }).disposed(by: aDisposeBag)
+
+//...later
+aDisposeBag = DisposeBag() // this line will cancel the request
+```
+
+#### Example with `flatMapLatest`
+```swift
+var aDisposeBag = DisposeBag()
+
+let diskCache = DiskCache<URL, NSData>()
+let networkFetcher = NetworkFetcher<URL, NSData>()
+
+let diskNetworkCache = diskCache + networkFetcher
+
+//every time the user input gives a new value it cancels the previous request in cache
+someUserInput
+    .flatMapLatest{ userInput in
+        let key = exampleKey(from: userInput)
+        return diskNetworkCache.get(key)
+    }
+    .subscribe(onNext: { response in
+
+    }).disposed(by: aDisposeBag)
+```
+
+### Map Values and Keys
+Different caches may know about different type of values and keys. 
+For example you may have a ram cache that needs a `String` type key and returns a `UIImage` type and a network fetcher (which is a type of cache) which knows about URL as a key and NSData as a response type.
+If you want to combine these two caches you couldn't do it directly because their types doesn't much. 
+You can map the values and key of a cache using mapValues and mapKeys
+
+#### Example
+```swift
+let networkFetcher = NetworkFetcher()      //Value = NSData, Key = URLRequest
+let ramCache = RamCache<String, UIImage>() //Value = UIImage, Key = String
+
+let imageNetworkFetcher = networkFetcher  //Value = UIImage, Key = String
+                            .mapKeys { (urlString: String) -> URLRequest in
+                                let url = URL(string: urlString)!
+                                return URLRequest(url: url)
+                            }
+                            .mapValues(
+                                f: { (data) -> UIImage in
+                                    return UIImage(data: data as Data)!
+                                }) { (image) -> NSData in
+                                    return UIImagePNGRepresentation(image) as! NSData
+                                }
+
+let imageRamNetworkCache = ramCache + imageNetworkFetcher //Value = UIImage, Key = String
+
+imageRamNetworkCache.get("http://an.image.url.png")
+    .subscribe(onNext: { image in
+        //in a view controller context
+        self.imageView.image = image
+    }).disposed(by: disposeBag)
+```
+More examples [here](https://github.com/gtsifrikas/RxCache/blob/feature/README/Sources/Caches.swift) 
+
+### Forward request
+In a scenario that you have composed two caches together and you want the right hand side cache to always get request regardless if the first cache has succeded or not you can use the forward request operator. By doing this you will get the value from the first cache (if exists) and the value from the second cache (if exists). Also note that the `.forwardRequest` does not guarantee the timing of the emissions to be aligned with the order of the composition.
+
+#### Example
+Let's assume that you have a screen that you want to load instantly in spite showing wrong values for a short period of time but always update it's values from the network.
+```swift 
+let screenCache = diskCache.forwardRequest() + networkFetcher
+
+screenCache.subscribe(onNext: {  screenViewModel
+    self.viewModel = screenViewModel //if disk cache has a value this will be called two times
+})
 ```
 
 ## Requirements
