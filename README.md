@@ -11,15 +11,43 @@
 
 ## Introduction
 
-RxCache is a library to .......
+RxCache is a composable cache library which leverates RxSwift's `Observable` for it's API.
+
+
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [FAQ](#faq)
+- [Credits](#credits)
+- [License](#license)
 
 <!-- <img src="Example/RxCache.gif" width="300"/> -->
 
-## Usage
+## Example usage
 
 ```swift
 import RxCache
-// ...
+
+let aDisposeBag = DisposeBag()
+
+let networkFetcher = NetworkFetcher()
+    .mapKeys { (url: URL) -> URLRequest in //map url to urlrequest
+        return URLRequest(url: url)
+    }
+let diskCache = DiskCache<URL, NSData>()
+let ramCache = RamCache<URL, NSData>()
+
+let cache = ramCache + (diskCache + networkFetcher).reuseInFlight() 
+//.reuseInFlight() concetrates all requests under one request if they have matching keys and the first request hasn't yet finished.
+
+let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
+
+cache.get(url)
+.subscribe(onNext: { (data: NSData) in
+    //use data
+}).disposed(by: aDisposeBag)
+
 ```
 
 ## Requirements
@@ -39,7 +67,7 @@ If you use **RxCache** in your app We would love to hear about it! Drop us a lin
 
 ## Examples
 
-Follow these 3 steps to run Example project: clone RxCache repository, open RxCache workspace and run the *Example* project.
+Follow these 3 steps to run Example project: clone RxCache repository, open Example/Example.xcworkspace workspace and run the *Example* project.
 
 You can also experiment and learn with the *RxCache Playground* which is contained in *RxCache.workspace*.
 
@@ -52,7 +80,7 @@ You can also experiment and learn with the *RxCache Playground* which is contain
 To install RxCache, simply add the following line to your Podfile:
 
 ```ruby
-pod 'RxCache', '~> 1.0'
+pod 'RxCache', '~> 0.1'
 ```
 
 ### Carthage
