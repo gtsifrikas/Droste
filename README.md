@@ -82,7 +82,7 @@ jsonCache
 - [x] [Forward request to a lower level cache even if the value exists by using `.forwardRequest` operator](#forward-request)
 - [x] [Create conditional combining of caches in runtime by using the `.switchCache` operator](#switch-cache)
 - [x] [If the request is expensive you can consolidate requests that have the same key and the first request is not done yet, using the `.reuseInFlight` operator](#reuse-in-flight)
-- [x] [Skip a cache in runtime depending on a condition, using the `.skipWhile` operator](#skip-while)
+- [x] [Skip a cache at runtime depending on a condition, using the `.skipWhile` operator](#skip-while)
 - [x] [Proper error handling through `Observable` chain](#error-handling)
 - [x] [Salient .get if you want the lack of a value to be treated as error](#salient-get)
 
@@ -239,6 +239,26 @@ cache.get("profileImage")
 #### Notes
 * Keys must be `Hashable`.
 * This operator is thread safe, means that you can do the same request dispatched from multiple queues and it will work without any unexpected behavior.
+
+### Skip while
+With `.skipWhile` operator you can, at runtime, to skip the cache depending of a condition.
+
+#### Example
+```swift
+
+let updateFromNetwork = true
+let conditionedDiskCache = diskCache.skipWhile { key in
+        let shouldSkip = (key == "a" && updateFromNetwork)
+        return Observable(shouldSkip)
+    }
+
+let cache = conditionedDiskCache + networkFetcher
+
+cache.get("a")
+    .subscribe(onNext: { response in
+        
+    })
+```
 
 ## Requirements
 
