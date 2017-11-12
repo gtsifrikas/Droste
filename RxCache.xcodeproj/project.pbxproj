@@ -174,7 +174,6 @@
 				C68A01EB1FA5F36B000DC341 /* Cache+Salient.swift */,
 				C6775D491F9B94CE0004AE11 /* CompositeCache.swift */,
 				C6775D471F9B94CE0004AE11 /* Extensions.swift */,
-				C6775D4E1F9B94CE0004AE11 /* Fetcher.swift */,
 				C6775D4C1F9B94CE0004AE11 /* Normalize.swift */,
 				C6A4EC821F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h */,
 				C6A4EC831F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.m */,
@@ -196,6 +195,7 @@
 		C6775D6A1F9B94FD0004AE11 /* Fetchers */ = {
 			isa = PBXGroup;
 			children = (
+				C6775D4E1F9B94CE0004AE11 /* Fetcher.swift */,
 				C6775D6F1F9B951B0004AE11 /* NetworkFetcher.swift */,
 			);
 			path = Fetchers;
