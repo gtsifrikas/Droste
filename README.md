@@ -217,6 +217,25 @@ cache.get("Hello") //this will use cacheA
 cache.get("World") //this will use cacheB
 ```
 
+### Reuse in flight
+When you want to get a resource that is expensive from a cache/fetcher, for example NetworkFetcher, you can use `.reuseInFlight` operator to consolidate all requests that have the same key provided that the first request has not yet finished. A example of this scenario is a chat app that has the same avatar multiple times on the screen and each avatar makes it's own request from the cache. Using this operator actually will be only one request for the image which all avatars will share it's response.
+
+#### Example
+```swift
+let cache = memoryCache + (diskCache + networkFetcher).reuseInFlight()
+
+cache.get("profileImage")
+    .subscribe(onNext: { image in
+        avatar1.image = image
+    })
+
+//a short while after, before the first request finished
+cache.get("profileImage")
+    .subscribe(onNext: { image in
+        avatar2.image = image //this will get the same response as the above without making a second request
+    }
+```
+
 ## Requirements
 
 * iOS 9.0+
