@@ -11,7 +11,7 @@
 
 ## Introduction
 
-RxCache is a lightweight composable cache library which leverates RxSwift's `Observable` for it's API.
+RxCache is a lightweight composable cache library which leverages RxSwift's `Observable` for it's API.
 
 - [Example usage](#example-usage)
 - [Features](#features)
@@ -190,9 +190,31 @@ Let's assume that you have a screen that you want to load instantly in spite sho
 ```swift 
 let screenCache = diskCache.forwardRequest() + networkFetcher
 
-screenCache.subscribe(onNext: {  screenViewModel
-    self.viewModel = screenViewModel //if disk cache has a value this will be called two times
-})
+screenCache
+    .get("withKey")
+    .subscribe(onNext: {  screenViewModel
+        self.viewModel = screenViewModel //if disk cache has a value this will be called two times
+    })
+```
+
+### Switch cache
+You can switch between caches in runtime depending on the key used.
+
+#### Example
+```swift
+let cacheA = ...
+let cacheB = ...
+let cache = switchCache(cacheA: cacheA, cacheB: cacheB) { (key) -> CacheSwitchResult in
+    if key == "Hello" {
+        return .cacheA
+    }
+    if key == "World" {
+        return .cacheB
+    }
+}
+
+cache.get("Hello") //this will use cacheA
+cache.get("World") //this will use cacheB
 ```
 
 ## Requirements
