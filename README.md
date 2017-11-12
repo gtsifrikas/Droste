@@ -11,7 +11,7 @@
 
 ## Introduction
 
-RxCache is a lightweight composable cache library which leverages RxSwift's `Observable` for it's API.
+RxCache is a lightweight composable caching library which leverages RxSwift's `Observable` for its API.
 
 - [Example usage](#example-usage)
 - [Features](#features)
@@ -88,28 +88,28 @@ jsonCache
 
 ### Out of the box
 We provide some singletons of caches that are ready for use.
-* `Caches.sharedJSONCache` takes URL and returns AnyObject which could be either array or dictionary depending of the endpoint's response
+* `Caches.sharedJSONCache` takes URL and returns AnyObject which could either be an Array or a Dictionary depending on the endpoint's response
 * `Caches.sharedDataCache` takes URL and returns NSData
 * `Caches.sharedImageCache` takes URL and returns UIImage
 
 ### Compose caches
-You can compose different type of caches, such as a composition of ram cache with a disk cache backed by a network fetcher.
-To compose two caches or more you can use the `.compose` or `+` operator.
+You can compose different types of caches, such as a composition of ram cache with a disk cache backed by a network fetcher.
+To compose two or more caches, you can use `.compose` or `+` operator.
 
 #### Example
 ```swift
 let ramCache = RamCache<URL, NSData>()
 let diskCache = DiskCache<URL, NSData>()
 
-//First asks the ram cache and if it fails and then asks the disk cache
+//First hit ram cache and in case of failure, hit the disk cache
 let ramDiskCache = ramCache.compose(other: diskCache)
 
-//The same functionality but using the + operator
+//Same composition example using the the overloaded `+` operator
 let ramDiskCache = ramCache + diskCache
 ```
 
 ### Cancel Requests
-The fact that RxCache is written using RxSwift it give us some extra functionality for free such as canceling requests.
+The fact that RxCache leverages RxSwift's power, gives us some extra free functionality, such as canceling on-going requests.
 
 #### Example with `DisposeBag`
 ```swift
@@ -126,7 +126,7 @@ diskNetworkCache
     }).disposed(by: aDisposeBag)
 
 //...later
-aDisposeBag = DisposeBag() // this line will cancel the request
+aDisposeBag = DisposeBag() // this line will cancel the on-going request
 ```
 
 #### Example with `flatMapLatest`
@@ -138,7 +138,7 @@ let networkFetcher = NetworkFetcher<URL, NSData>()
 
 let diskNetworkCache = diskCache + networkFetcher
 
-//every time the user input gives a new value it cancels the previous request in cache
+//Each time the user input emits a new value, it cancels the previous request in cache
 someUserInput
     .flatMapLatest{ userInput in
         let key = exampleKey(from: userInput)
@@ -150,10 +150,10 @@ someUserInput
 ```
 
 ### Map Values and Keys
-Different caches may know about different type of values and keys. 
-For example you may have a ram cache that needs a `String` type key and returns a `UIImage` type and a network fetcher (which is a type of cache) which knows about URL as a key and NSData as a response type.
-If you want to combine these two caches you couldn't do it directly because their types doesn't much. 
-You can map the values and key of a cache using mapValues and mapKeys
+Different Caches may know about different types of values and keys. 
+For example, you may have a RAM cache which uses a `String` type key and returns a `UIImage` type and a network fetcher (which is a type of cache) that uses URL as a key and responds with NSData.
+If you would like to combine those two Caches you could not do it directly because their types do not match. 
+You can map the values and key of a cache using `mapValues` and `mapKeys`.
 
 #### Example
 ```swift
@@ -183,22 +183,22 @@ imageRamNetworkCache.get("http://an.image.url.png")
 More examples [here](https://github.com/gtsifrikas/RxCache/blob/feature/README/Sources/Caches.swift) 
 
 ### Forward request
-In a scenario that you have composed two caches together and you want the right hand side cache to always get request regardless if the first cache has succeded or not you can use the forward request operator. By doing this you will get the value from the first cache (if exists) and the value from the second cache (if exists). Also note that the `.forwardRequest` does not guarantee the timing of the emissions to be aligned with the order of the composition.
+In a scenario that you have composed two Caches together and you want the right hand side cache to always hit the network,  regardless if the first cache has succeded or not, you can use the forward request operator. By doing this, you are able to get the value from the first cache (if it exists) and followning the value from the second cache (if it exists). Also, note that the `.forwardRequest` operator, does not provide any guarantees on the order of the emissions to be aligned with the order of the composition.
 
 #### Example
-Let's assume that you have a screen that you want to load instantly in spite showing wrong values for a short period of time but always update it's values from the network.
+Let's assume that you have a screen which you want to load instantly and present a cached result for a short period of time,  but always update it when the network request succeeds.
 ```swift 
 let screenCache = diskCache.forwardRequest() + networkFetcher
 
 screenCache
     .get("withKey")
     .subscribe(onNext: {  screenViewModel
-        self.viewModel = screenViewModel //if disk cache has a value this will be called two times
+        self.viewModel = screenViewModel //if disk cache has a value this will be called twice
     })
 ```
 
 ### Switch cache
-You can switch between caches in runtime depending on the key used.
+You can switch between Caches in runtime depending on the key used.
 
 #### Example
 ```swift
@@ -218,7 +218,7 @@ cache.get("World") //this will use cacheB
 ```
 
 ### Reuse in flight
-When you want to get a resource that is expensive from a cache/fetcher, for example NetworkFetcher, you can use `.reuseInFlight` operator to consolidate all requests that have the same key provided that the first request has not yet finished. A example of this scenario is a chat app that has the same avatar multiple times on the screen and each avatar makes it's own request from the cache. Using this operator actually only one request will be made for the image which all avatars will share it's response.
+When you want to get an expensive resource from a cache/fetcher (e.g. `NetworkFetcher`), you can use `.reuseInFlight` operator to consolidate all requests that have the same key provided, when there is already an in-flight request for the same key. An example of this scenario is, a chat app that presents the same avatar multiple times on the screen and each avatar makes its own request from the cache. Using this operator means that only one request will be made and any subsequent requests will share the response of the first one.
 
 #### Example
 ```swift
@@ -238,10 +238,10 @@ cache.get("profileImage")
 
 #### Notes
 * Keys must be `Hashable`.
-* This operator is thread safe, means that you can do the same request dispatched from multiple queues and it will work without any unexpected behavior.
+* This operator is thread safe, meaning that you can dispatch the same request from multiple queues and it will work without any unexpected behaviors.
 
 ### Skip while
-With `.skipWhile` operator you can, at runtime, to skip the cache depending of a condition.
+With `.skipWhile` operator you can, at runtime, to skip the cache depending on a given condition.
 
 #### Example
 ```swift
@@ -264,12 +264,11 @@ cache.get("a")
 We have two `.get` operators which have a slightly different behavior.
 * `func get(_ key: Key) -> Observable<Value?>` **Optional return value**
 
-With this operator if the cache has not a value and *hasn't* thrown an error internally it will return a `nil` value. All thrown errors will propagate as expected.
-
+Using this operator, means that, if the cache does not have a value and *has not* thrown an error internally, then it will return a `nil` value. All thrown errors will propagate as expected.
 
 * `func get(_ key: Key) -> Observable<Value>` **Non-optional return value**
 
-With this operator if the cache has not a value will throw a `CacheFetchError.valueNotFound` error. This operator *doesn't change* the behavior of other thrown errors
+Using this operator, means that, if the cache does not have a value, then it will throw a `CacheFetchError.valueNotFound` error. This operator *does not change* the expected behavior of other thrown errors.
 
 
 ## Requirements
@@ -279,25 +278,29 @@ With this operator if the cache has not a value will throw a `CacheFetchError.va
 
 ## Getting involved
 
-* If you **want to contribute** please feel free to **submit pull requests**.
+* If you **want to contribute** please feel free to **submit PRs**.
 * If you **have a feature request** please **open an issue**.
 * If you **found a bug** or **need help** please **check older issues, [FAQ](#faq) and threads on [StackOverflow](http://stackoverflow.com/questions/tagged/RxCache) (Tag 'RxCache') before submitting an issue**.
 
-Before contribute check the [CONTRIBUTING](https://github.com/gtsifrikas/RxCache/blob/master/.github/CONTRIBUTING.md) file for more info.
+Before contributing check the [CONTRIBUTING](https://github.com/gtsifrikas/RxCache/blob/master/.github/CONTRIBUTING.md) file for more info.
 
-If you use **RxCache** in your app We would love to hear about it! Drop us a line on [Twitter](https://twitter.com/gtsifrikas).
+If you use **RxCache** in your app we would love to hear about it! Drop us a line on [Twitter](https://twitter.com/gtsifrikas).
 
 ## Examples
 
-Follow these 3 steps to run Example project: clone RxCache repository, open Example/Example.xcworkspace workspace and run the *Example* project.
+Follow these 3 steps to run the example project:
 
-You can also experiment and learn with the *RxCache Playground* which is contained in *RxCache.workspace*.
+* Clone RxCache repository
+* Open Example/Example.xcworkspace workspace 
+* Run *Example* project
+
+You can also experiment and learn the using the *RxCache Playground*, contained in *RxCache.workspace*.
 
 ## Installation
 
 ### CocoaPods
 
-[CocoaPods](https://cocoapods.org/) is a dependency manager for Cocoa projects.
+[CocoaPods](https://cocoapods.org/)
 
 To install RxCache, simply add the following line to your Podfile:
 
@@ -307,7 +310,7 @@ pod 'RxCache', '~> 0.1'
 
 ### Carthage
 
-[Carthage](https://github.com/Carthage/Carthage) is a simple, decentralized dependency manager for Cocoa.
+[Carthage](https://github.com/Carthage/Carthage)
 
 To install RxCache, simply add the following line to your Cartfile:
 
