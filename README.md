@@ -236,6 +236,10 @@ cache.get("profileImage")
     }
 ```
 
+#### Notes
+* Keys must be `Hashable`.
+* This operator is thread safe, means that you can do the same request dispatched from multiple queues and it will work without any unexpected behavior.
+
 ## Requirements
 
 * iOS 9.0+
