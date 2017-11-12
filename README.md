@@ -83,8 +83,8 @@ jsonCache
 - [x] [Create conditional combining of caches in runtime by using the `.switchCache` operator](#switch-cache)
 - [x] [If the request is expensive you can consolidate requests that have the same key and the first request is not done yet, using the `.reuseInFlight` operator](#reuse-in-flight)
 - [x] [Skip a cache at runtime depending on a condition, using the `.skipWhile` operator](#skip-while)
-- [x] [Proper error handling through `Observable` chain](#error-handling)
 - [x] [Salient .get if you want the lack of a value to be treated as error](#salient-get)
+- [x] Proper error handling through `Observable` chain sequence
 
 ### Out of the box
 We provide some singletons of caches that are ready for use.
@@ -101,15 +101,15 @@ To compose two caches or more you can use the `.compose` or `+` operator.
 let ramCache = RamCache<URL, NSData>()
 let diskCache = DiskCache<URL, NSData>()
 
-//First asks the ram cache and if it fails it asks the disk cache
+//First asks the ram cache and if it fails and then asks the disk cache
 let ramDiskCache = ramCache.compose(other: diskCache)
 
-//The same but using the + operator
+//The same functionality but using the + operator
 let ramDiskCache = ramCache + diskCache
 ```
 
 ### Cancel Requests
-The fact that RxCache is written using RxSwift it give us some extra functionality such as canceling requests.
+The fact that RxCache is written using RxSwift it give us some extra functionality for free such as canceling requests.
 
 #### Example with `DisposeBag`
 ```swift
@@ -218,7 +218,7 @@ cache.get("World") //this will use cacheB
 ```
 
 ### Reuse in flight
-When you want to get a resource that is expensive from a cache/fetcher, for example NetworkFetcher, you can use `.reuseInFlight` operator to consolidate all requests that have the same key provided that the first request has not yet finished. A example of this scenario is a chat app that has the same avatar multiple times on the screen and each avatar makes it's own request from the cache. Using this operator actually will be only one request for the image which all avatars will share it's response.
+When you want to get a resource that is expensive from a cache/fetcher, for example NetworkFetcher, you can use `.reuseInFlight` operator to consolidate all requests that have the same key provided that the first request has not yet finished. A example of this scenario is a chat app that has the same avatar multiple times on the screen and each avatar makes it's own request from the cache. Using this operator actually only one request will be made for the image which all avatars will share it's response.
 
 #### Example
 ```swift
@@ -260,6 +260,18 @@ cache.get("a")
     })
 ```
 
+### Salient get
+We have two `.get` operators which have a slightly different behavior.
+* `func get(_ key: Key) -> Observable<Value?>` **Optional return value**
+
+With this operator if the cache has not a value and *hasn't* thrown an error internally it will return a `nil` value. All thrown errors will propagate as expected.
+
+
+* `func get(_ key: Key) -> Observable<Value>` **Non-optional return value**
+
+With this operator if the cache has not a value will throw a `CacheFetchError.valueNotFound` error. This operator *doesn't change* the behavior of other thrown errors
+
+
 ## Requirements
 
 * iOS 9.0+
@@ -271,7 +283,7 @@ cache.get("a")
 * If you **have a feature request** please **open an issue**.
 * If you **found a bug** or **need help** please **check older issues, [FAQ](#faq) and threads on [StackOverflow](http://stackoverflow.com/questions/tagged/RxCache) (Tag 'RxCache') before submitting an issue**.
 
-Before contribute check the [CONTRIBUTING](https://github.com/gtsifrikas/RxCache/blob/master/CONTRIBUTING.md) file for more info.
+Before contribute check the [CONTRIBUTING](https://github.com/gtsifrikas/RxCache/blob/master/.github/CONTRIBUTING.md) file for more info.
 
 If you use **RxCache** in your app We would love to hear about it! Drop us a line on [Twitter](https://twitter.com/gtsifrikas).
 
@@ -306,12 +318,6 @@ github "gtsifrikas/RxCache" ~> 1.0
 ## Author
 
 * [George Tsifrikas](https://github.com/gtsifrikas) ([@gtsifrikas](https://twitter.com/gtsifrikas))
-
-## FAQ
-
-### How to .....
-
-You can do it by conforming to .....
 
 # Changelog
 
