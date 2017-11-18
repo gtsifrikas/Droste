@@ -10,9 +10,9 @@
 #endif
 #endif
 
+#import "Droste.h"
 #import "NSKeyedUnarchiver+Swift.h"
-#import "RxCache.h"
 
-FOUNDATION_EXPORT double RxCacheVersionNumber;
-FOUNDATION_EXPORT const unsigned char RxCacheVersionString[];
+FOUNDATION_EXPORT double DrosteVersionNumber;
+FOUNDATION_EXPORT const unsigned char DrosteVersionString[];
 

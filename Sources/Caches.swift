@@ -1,6 +1,6 @@
 //
 //  Caches.swift
-//  RxCache
+//  Droste
 //
 //  Created by George Tsifrikas on 01/11/2017.
 //

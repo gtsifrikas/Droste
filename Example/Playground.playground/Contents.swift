@@ -1,6 +1,6 @@
 //
 //  Playground.playground
-//  RxCache
+//  Droste
 //
 //  Copyright © 2016 George Tsifirkas. All rights reserved.
 //
@@ -9,7 +9,7 @@
 
 import UIKit
 import RxSwift
-import RxCache
+import Droste
 import PlaygroundSupport
 
 PlaygroundPage.current.needsIndefiniteExecution = true

@@ -1,6 +1,6 @@
 //
 //  RamCacheTests.swift
-//  RxCache
+//  Droste
 //
 //  Created by George Tsifrikas on 01/11/2017.
 //
@@ -10,7 +10,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import RxCache
+@testable import Droste
 
 class RamCacheTests: QuickSpec {
     override func spec() {

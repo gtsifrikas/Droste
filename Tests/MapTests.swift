@@ -1,6 +1,6 @@
 //
 //  MapTests.swift
-//  RxCache
+//  Droste
 //
 //  Created by George Tsifrikas on 29/10/2017.
 //
@@ -10,7 +10,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import RxCache
+@testable import Droste
 
 class MapTests: QuickSpec {
     override func spec() {
