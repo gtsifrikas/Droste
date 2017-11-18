@@ -10,10 +10,10 @@ import Foundation
 import RxSwift
 
 public struct CacheDefaults {
-    static let defaultDiskCacheLocation = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.RxCache.default")
+    static let defaultDiskCacheLocation = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.Droste.default")
 }
 
-public enum RxCacheDiskError: Error {
+public enum DrosteDiskError: Error {
     case diskSaveFailed
 }
 
@@ -21,12 +21,12 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
     public typealias Key = K
     public typealias Value = V
     
-    private let path: String
+    private let path: String    
     private var size: UInt64 = 0
     private let fileManager: FileManager
 
     private lazy var cacheQueue: DispatchQueue = {
-        return DispatchQueue(label: "com.rxcache.serial", qos: .userInitiated)
+        return DispatchQueue(label: "com.droste.serial", qos: .userInitiated)
     }()
     
     /// The capacity of the cache
@@ -94,7 +94,7 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
                 }
             } else {
                 DispatchQueue.main.async {
-                    observer.on(.error(RxCacheDiskError.diskSaveFailed))
+                    observer.on(.error(DrosteDiskError.diskSaveFailed))
                     observer.onCompleted()
                 }
             }

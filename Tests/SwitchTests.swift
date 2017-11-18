@@ -1,6 +1,6 @@
 //
 //  SwitchTests.swift
-//  RxCacheTests
+//  DrosteTests
 //
 //  Created by George Tsifrikas on 30/10/2017.
 //
@@ -10,7 +10,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import RxCache
+@testable import Droste
 
 class SwitchTests: QuickSpec {
     override func spec() {

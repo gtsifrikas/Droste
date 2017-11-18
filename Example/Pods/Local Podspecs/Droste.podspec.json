@@ -1,8 +1,8 @@
 {
-  "name": "RxCache",
+  "name": "Droste",
   "version": "0.1.0",
-  "summary": "A short description of RxCache.",
-  "homepage": "https://github.com/gtsifrikas/RxCache",
+  "summary": "A short description of Droste.",
+  "homepage": "https://github.com/gtsifrikas/Droste",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -11,7 +11,7 @@
     "George Tsifrikas": "gtsifrikas@gmail.com"
   },
   "source": {
-    "git": "https://github.com/gtsifrikas/RxCache.git",
+    "git": "https://github.com/gtsifrikas/Droste.git",
     "tag": "0.1.0"
   },
   "social_media_url": "https://twitter.com/gtsifrikas",
@@ -23,7 +23,7 @@
   },
   "requires_arc": true,
   "source_files": "Sources/**/*.{swift,h,m}",
-  "module_name": "RxCache",
+  "module_name": "Droste",
   "dependencies": {
     "RxSwift": [
       "~> 3.0"
