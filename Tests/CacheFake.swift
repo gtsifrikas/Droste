@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-import RxCache
+import Droste
 
 class CacheFake<K, V>: Cache {
 

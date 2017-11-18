@@ -1,6 +1,6 @@
 //
 //  Cache+Salient.swift
-//  RxCache
+//  Droste
 //
 //  Created by George Tsifrikas on 29/10/2017.
 //

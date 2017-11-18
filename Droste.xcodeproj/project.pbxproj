@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		28F828811C494B2C00330CF4 /* RxCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F828801C494B2C00330CF4 /* RxCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		28F828881C494B2C00330CF4 /* RxCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F8287D1C494B2C00330CF4 /* RxCache.framework */; };
+		28F828811C494B2C00330CF4 /* Droste.h in Headers */ = {isa = PBXBuildFile; fileRef = 28F828801C494B2C00330CF4 /* Droste.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		28F828881C494B2C00330CF4 /* Droste.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F8287D1C494B2C00330CF4 /* Droste.framework */; };
 		C603522F1FA5FB9E00C23D82 /* SalientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C603522C1FA5FB0D00C23D82 /* SalientTests.swift */; };
 		C60352321FA606B500C23D82 /* ForwardRequestOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60352301FA606AF00C23D82 /* ForwardRequestOperatorTests.swift */; };
 		C60352371FA615B400C23D82 /* MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60352351FA6107200C23D82 /* MapTests.swift */; };
@@ -50,15 +50,15 @@
 			containerPortal = 28F828741C494B2C00330CF4 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 28F8287C1C494B2C00330CF4;
-			remoteInfo = RxCache;
+			remoteInfo = Droste;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		28F8287D1C494B2C00330CF4 /* RxCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		28F828801C494B2C00330CF4 /* RxCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxCache.h; sourceTree = "<group>"; };
+		28F8287D1C494B2C00330CF4 /* Droste.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Droste.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F828801C494B2C00330CF4 /* Droste.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Droste.h; sourceTree = "<group>"; };
 		28F828821C494B2C00330CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		28F828871C494B2C00330CF4 /* RxCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RxCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F828871C494B2C00330CF4 /* DrosteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrosteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F8288E1C494B2C00330CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		28F8289B1C494BF100330CF4 /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = Playground.playground; path = Example/Playground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C603522C1FA5FB0D00C23D82 /* SalientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SalientTests.swift; sourceTree = "<group>"; };
@@ -81,7 +81,7 @@
 		C6775D611F9B94F40004AE11 /* RamCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RamCache.swift; sourceTree = "<group>"; };
 		C6775D631F9B94F40004AE11 /* DiskCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiskCache.swift; sourceTree = "<group>"; };
 		C6775D6F1F9B951B0004AE11 /* NetworkFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkFetcher.swift; sourceTree = "<group>"; };
-		C6775D731F9B95390004AE11 /* RxCacheTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RxCacheTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		C6775D731F9B95390004AE11 /* DrosteTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DrosteTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		C6775D741F9B95390004AE11 /* RetainTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RetainTests.swift; sourceTree = "<group>"; };
 		C6775D751F9B95390004AE11 /* ReuseInFlightTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReuseInFlightTests.swift; sourceTree = "<group>"; };
 		C6775D761F9B953A0004AE11 /* CacheFake.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheFake.swift; sourceTree = "<group>"; };
@@ -110,7 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F828881C494B2C00330CF4 /* RxCache.framework in Frameworks */,
+				28F828881C494B2C00330CF4 /* Droste.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,8 +131,8 @@
 		28F8287E1C494B2C00330CF4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				28F8287D1C494B2C00330CF4 /* RxCache.framework */,
-				28F828871C494B2C00330CF4 /* RxCacheTests.xctest */,
+				28F8287D1C494B2C00330CF4 /* Droste.framework */,
+				28F828871C494B2C00330CF4 /* DrosteTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,7 +146,7 @@
 				C6775D741F9B95390004AE11 /* RetainTests.swift */,
 				C6775D751F9B95390004AE11 /* ReuseInFlightTests.swift */,
 				28F8288E1C494B2C00330CF4 /* Info.plist */,
-				C6775D731F9B95390004AE11 /* RxCacheTests-Bridging-Header.h */,
+				C6775D731F9B95390004AE11 /* DrosteTests-Bridging-Header.h */,
 				C62BBFF71FA385C0000265CA /* SkipWhileTests.swift */,
 				C603522C1FA5FB0D00C23D82 /* SalientTests.swift */,
 				C60352301FA606AF00C23D82 /* ForwardRequestOperatorTests.swift */,
@@ -177,7 +177,7 @@
 				C6775D4C1F9B94CE0004AE11 /* Normalize.swift */,
 				C6A4EC821F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h */,
 				C6A4EC831F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.m */,
-				28F828801C494B2C00330CF4 /* RxCache.h */,
+				28F828801C494B2C00330CF4 /* Droste.h */,
 				28F828821C494B2C00330CF4 /* Info.plist */,
 			);
 			path = Sources;
@@ -226,7 +226,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28F828811C494B2C00330CF4 /* RxCache.h in Headers */,
+				28F828811C494B2C00330CF4 /* Droste.h in Headers */,
 				C6A4EC841F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,9 +242,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		28F8287C1C494B2C00330CF4 /* RxCache */ = {
+		28F8287C1C494B2C00330CF4 /* Droste */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28F828911C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "RxCache" */;
+			buildConfigurationList = 28F828911C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "Droste" */;
 			buildPhases = (
 				28F828781C494B2C00330CF4 /* Sources */,
 				28F828791C494B2C00330CF4 /* Frameworks */,
@@ -255,14 +255,14 @@
 			);
 			dependencies = (
 			);
-			name = RxCache;
-			productName = RxCache;
-			productReference = 28F8287D1C494B2C00330CF4 /* RxCache.framework */;
+			name = Droste;
+			productName = Droste;
+			productReference = 28F8287D1C494B2C00330CF4 /* Droste.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		28F828861C494B2C00330CF4 /* RxCacheTests */ = {
+		28F828861C494B2C00330CF4 /* DrosteTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 28F828941C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "RxCacheTests" */;
+			buildConfigurationList = 28F828941C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "DrosteTests" */;
 			buildPhases = (
 				28F828831C494B2C00330CF4 /* Sources */,
 				28F828841C494B2C00330CF4 /* Frameworks */,
@@ -274,9 +274,9 @@
 			dependencies = (
 				28F8288A1C494B2C00330CF4 /* PBXTargetDependency */,
 			);
-			name = RxCacheTests;
-			productName = RxCacheTests;
-			productReference = 28F828871C494B2C00330CF4 /* RxCacheTests.xctest */;
+			name = DrosteTests;
+			productName = DrosteTests;
+			productReference = 28F828871C494B2C00330CF4 /* DrosteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -298,7 +298,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 28F828771C494B2C00330CF4 /* Build configuration list for PBXProject "RxCache" */;
+			buildConfigurationList = 28F828771C494B2C00330CF4 /* Build configuration list for PBXProject "Droste" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -310,8 +310,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				28F8287C1C494B2C00330CF4 /* RxCache */,
-				28F828861C494B2C00330CF4 /* RxCacheTests */,
+				28F8287C1C494B2C00330CF4 /* Droste */,
+				28F828861C494B2C00330CF4 /* DrosteTests */,
 			);
 		};
 /* End PBXProject section */
@@ -383,7 +383,7 @@
 /* Begin PBXTargetDependency section */
 		28F8288A1C494B2C00330CF4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 28F8287C1C494B2C00330CF4 /* RxCache */;
+			target = 28F8287C1C494B2C00330CF4 /* Droste */;
 			targetProxy = 28F828891C494B2C00330CF4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -509,7 +509,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.RxCache;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.Droste;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -528,7 +528,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.RxCache;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.Droste;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -540,9 +540,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.RxCacheTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.DrosteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCacheTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/DrosteTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
@@ -554,9 +554,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.RxCacheTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gtsifrikas.DrosteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/RxCacheTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/DrosteTests-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -564,7 +564,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		28F828771C494B2C00330CF4 /* Build configuration list for PBXProject "RxCache" */ = {
+		28F828771C494B2C00330CF4 /* Build configuration list for PBXProject "Droste" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28F8288F1C494B2C00330CF4 /* Debug */,
@@ -573,7 +573,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28F828911C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "RxCache" */ = {
+		28F828911C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "Droste" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28F828921C494B2C00330CF4 /* Debug */,
@@ -582,7 +582,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		28F828941C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "RxCacheTests" */ = {
+		28F828941C494B2C00330CF4 /* Build configuration list for PBXNativeTarget "DrosteTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				28F828951C494B2C00330CF4 /* Debug */,

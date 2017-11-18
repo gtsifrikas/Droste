@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RxCache.xcodeproj">
+      location = "group:Droste.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Example/Example.xcodeproj">

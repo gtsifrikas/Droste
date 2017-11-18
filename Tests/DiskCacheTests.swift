@@ -11,7 +11,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import RxCache
+@testable import Droste
 
 private func filesInDirectory(directory: String) -> [String] {
     let result = (try? FileManager.default.contentsOfDirectory(atPath: directory)) ?? []
@@ -24,7 +24,7 @@ class DiskCacheTests: QuickSpec {
         
         describe("The Disk Cache") {
             var sut: DiskCache<String, NSData>!
-            let path = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.RxCache.default").appending("/test")
+            let path = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.Droste.default").appending("/test")
             let capacity: UInt64 = 400//bytes
             var fileManager: FileManager!
             var scheduler: TestScheduler!

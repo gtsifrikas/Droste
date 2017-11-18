@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0900"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8ACFF28813339D155092BB7B679A326D"
-               BuildableName = "RxCache-Unit-Tests.xctest"
-               BlueprintName = "RxCache-Unit-Tests"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "28F8287C1C494B2C00330CF4"
+               BuildableName = "Droste.framework"
+               BlueprintName = "Droste"
+               ReferencedContainer = "container:Droste.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,22 +26,29 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      disableMainThreadChecker = "YES"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8ACFF28813339D155092BB7B679A326D"
-               BuildableName = "RxCache-Unit-Tests.xctest"
-               BlueprintName = "RxCache-Unit-Tests"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "28F828861C494B2C00330CF4"
+               BuildableName = "DrosteTests.xctest"
+               BlueprintName = "DrosteTests"
+               ReferencedContainer = "container:Droste.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "28F8287C1C494B2C00330CF4"
+            BuildableName = "Droste.framework"
+            BlueprintName = "Droste"
+            ReferencedContainer = "container:Droste.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -59,10 +66,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8ACFF28813339D155092BB7B679A326D"
-            BuildableName = "RxCache-Unit-Tests.xctest"
-            BlueprintName = "RxCache-Unit-Tests"
-            ReferencedContainer = "container:Pods.xcodeproj">
+            BlueprintIdentifier = "28F8287C1C494B2C00330CF4"
+            BuildableName = "Droste.framework"
+            BlueprintName = "Droste"
+            ReferencedContainer = "container:Droste.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -74,6 +81,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "28F8287C1C494B2C00330CF4"
+            BuildableName = "Droste.framework"
+            BlueprintName = "Droste"
+            ReferencedContainer = "container:Droste.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
