@@ -318,6 +318,11 @@ To install Droste, simply add the following line to your Cartfile:
 github "gtsifrikas/Droste" ~> 0.1
 ```
 
+## Tasks for version 1.0
+- [ ] 100% coverage
+- [ ] Support macOS
+- [ ] Support linux
+
 ## Author
 
 * [George Tsifrikas](https://github.com/gtsifrikas) ([@gtsifrikas](https://twitter.com/gtsifrikas))
