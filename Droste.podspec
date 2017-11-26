@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
   s.source           = { git: "https://github.com/gtsifrikas/Droste.git", tag: s.version.to_s }
   s.social_media_url = 'https://twitter.com/gtsifrikas'
   s.ios.deployment_target = '9.0'
+  s.platform = :ios
   s.requires_arc = true
   s.source_files = 'Sources/**/*.{swift,h,m}'
   s.module_name = 'Droste'
