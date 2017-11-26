@@ -1,7 +1,7 @@
 {
   "name": "Droste",
   "version": "0.1.0",
-  "summary": "A short description of Droste.",
+  "summary": "Droste is a lightweight composable caching library which leverages RxSwift's Observable for its API.",
   "homepage": "https://github.com/gtsifrikas/Droste",
   "license": {
     "type": "MIT",
@@ -26,7 +26,7 @@
   "module_name": "Droste",
   "dependencies": {
     "RxSwift": [
-      "~> 3.0"
+
     ]
   },
   "testspecs": [
@@ -39,7 +39,7 @@
       ],
       "dependencies": {
         "RxSwift": [
-          "~> 3.0"
+
         ],
         "Nimble": [
 
@@ -48,7 +48,7 @@
 
         ],
         "RxTest": [
-          "~> 3.0"
+
         ]
       }
     }

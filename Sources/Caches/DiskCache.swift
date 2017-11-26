@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 public struct CacheDefaults {
-    static let defaultDiskCacheLocation = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.Droste.default")
+    public static let defaultDiskCacheLocation = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.Droste.default")
 }
 
 public enum DrosteDiskError: Error {

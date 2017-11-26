@@ -14,7 +14,7 @@ extension Cache {
     public func compose<B: Cache>(other: B)
         -> CompositeCache<Key, Value> where Key == B.Key, Value == B.Value {
             return CompositeCache(
-                get: { (key) in
+                get: { (key: Key) -> Observable<Value?> in
                     self.get(key)
                         .flatMap { (value) -> Observable<Value?> in
                             if value != nil {
@@ -29,7 +29,7 @@ extension Cache {
                     }
             },
                 set: {value, key in
-                    return Observable.zip(self.set(value, for: key), other.set(value, for: key)) { _ in }// set the value to both caches and wait for both to finish the operation
+                    return Observable.zip(self.set(value, for: key), other.set(value, for: key)) { _,_ in }// set the value to both caches and wait for both to finish the operation
             }, clear: {
                 self.clear()
                 other.clear()
