@@ -322,6 +322,7 @@ github "gtsifrikas/Droste" ~> 0.1
 - [ ] 100% coverage
 - [ ] Support macOS
 - [ ] Support linux
+- [ ] Update README to include custom Cache creation.
 
 ## Author
 
