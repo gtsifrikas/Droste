@@ -1,17 +1,17 @@
-# RxCache
+# Droste
 
 <p align="left">
-<a href="https://travis-ci.org/gtsifrikas/RxCache"><img src="https://travis-ci.org/gtsifrikas/RxCache.svg?branch=master" alt="Build status" /></a>
+<a href="https://travis-ci.org/gtsifrikas/Droste"><img src="https://travis-ci.org/gtsifrikas/Droste.svg?branch=master" alt="Build status" /></a>
 <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
 <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift4-compatible-4BC51D.svg?style=flat" alt="Swift 4 compatible" /></a>
 <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-<a href="https://cocoapods.org/pods/RxCache"><img src="	https://img.shields.io/cocoapods/v/RxCache.svg" alt="CocoaPods compatible" /></a>
-<a href="https://raw.githubusercontent.com/gtsifrikas/RxCache/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
+<a href="https://cocoapods.org/pods/Droste"><img src="	https://img.shields.io/cocoapods/v/Droste.svg" alt="CocoaPods compatible" /></a>
+<a href="https://raw.githubusercontent.com/gtsifrikas/Droste/master/LICENSE"><img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat" alt="License: MIT" /></a>
 </p>
 
 ## Introduction
 
-RxCache is a lightweight composable caching library which leverages RxSwift's `Observable` for its API.
+Droste is a lightweight composable caching library which leverages RxSwift's `Observable` for its API.
 
 - [Example usage](#example-usage)
 - [Features](#features)
@@ -26,7 +26,7 @@ RxCache is a lightweight composable caching library which leverages RxSwift's `O
 
 ### Using out of the box caches
 ```swift
-import RxCache
+import Droste
 
 let aDisposeBag = DisposeBag()
 let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
@@ -42,7 +42,7 @@ Caches
 
 ### Or composing your own cache
 ```swift
-import RxCache
+import Droste
 
 let aDisposeBag = DisposeBag()
 let url = URL(string: "https://en.wikipedia.org/w/api.php?action=query&prop=revisions&rvprop=content&rvsection=0&titles=pizza&format=json")!
@@ -109,7 +109,7 @@ let ramDiskCache = ramCache + diskCache
 ```
 
 ### Cancel Requests
-The fact that RxCache leverages RxSwift's power, gives us some extra free functionality, such as canceling on-going requests.
+The fact that Droste leverages RxSwift's power, gives us some extra free functionality, such as canceling on-going requests.
 
 #### Example with `DisposeBag`
 ```swift
@@ -180,7 +180,7 @@ imageRamNetworkCache.get("http://an.image.url.png")
         self.imageView.image = image
     }).disposed(by: disposeBag)
 ```
-More examples [here](https://github.com/gtsifrikas/RxCache/blob/feature/README/Sources/Caches.swift) 
+More examples [here](https://github.com/gtsifrikas/Droste/blob/feature/README/Sources/Caches.swift) 
 
 ### Forward request
 In a scenario that you have composed two Caches together and you want the right hand side cache to always hit the network,  regardless if the first cache has succeded or not, you can use the forward request operator. By doing this, you are able to get the value from the first cache (if it exists) and followning the value from the second cache (if it exists). Also, note that the `.forwardRequest` operator, does not provide any guarantees on the order of the emissions to be aligned with the order of the composition.
@@ -280,21 +280,21 @@ Using this operator, means that, if the cache does not have a value, then it wil
 
 * If you **want to contribute** please feel free to **submit PRs**.
 * If you **have a feature request** please **open an issue**.
-* If you **found a bug** or **need help** please **check older issues, [FAQ](#faq) and threads on [StackOverflow](http://stackoverflow.com/questions/tagged/RxCache) (Tag 'RxCache') before submitting an issue**.
+* If you **found a bug** or **need help** please **check older issues, [FAQ](#faq) and threads on [StackOverflow](http://stackoverflow.com/questions/tagged/Droste) (Tag 'Droste') before submitting an issue**.
 
-Before contributing check the [CONTRIBUTING](https://github.com/gtsifrikas/RxCache/blob/master/.github/CONTRIBUTING.md) file for more info.
+Before contributing check the [CONTRIBUTING](https://github.com/gtsifrikas/Droste/blob/master/.github/CONTRIBUTING.md) file for more info.
 
-If you use **RxCache** in your app we would love to hear about it! Drop us a line on [Twitter](https://twitter.com/gtsifrikas).
+If you use **Droste** in your app we would love to hear about it! Drop us a line on [Twitter](https://twitter.com/gtsifrikas).
 
 ## Examples
 
 Follow these 3 steps to run the example project:
 
-* Clone RxCache repository
+* Clone Droste repository
 * Open Example/Example.xcworkspace workspace 
 * Run *Example* project
 
-You can also experiment and learn the using the *RxCache Playground*, contained in *RxCache.workspace*.
+You can also experiment and learn the using the *Droste Playground*, contained in *Droste.workspace*.
 
 ## Installation
 
@@ -302,20 +302,20 @@ You can also experiment and learn the using the *RxCache Playground*, contained 
 
 [CocoaPods](https://cocoapods.org/)
 
-To install RxCache, simply add the following line to your Podfile:
+To install Droste, simply add the following line to your Podfile:
 
 ```ruby
-pod 'RxCache', '~> 0.1'
+pod 'Droste', '~> 0.1'
 ```
 
 ### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage)
 
-To install RxCache, simply add the following line to your Cartfile:
+To install Droste, simply add the following line to your Cartfile:
 
 ```ogdl
-github "gtsifrikas/RxCache" ~> 1.0
+github "gtsifrikas/Droste" ~> 1.0
 ```
 
 ## Author
