@@ -8,7 +8,7 @@
 import Foundation
 
 //some caches to use for common cases/examples
-public struct Caches {
+public struct DrosteCaches {
     
     public static var sharedDataCache = dataCache()
     public static var sharedJSONCache = jsonCache()
