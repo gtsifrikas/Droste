@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Droste"
   s.version          = "0.1.0"
-  s.summary          = "A short description of Droste."
+  s.summary          = "Droste is a lightweight composable caching library which leverages RxSwift's Observable for its API."
   s.homepage         = "https://github.com/gtsifrikas/Droste"
   s.license          = { type: 'MIT', file: 'LICENSE' }
   s.author           = { "George Tsifrikas" => "gtsifrikas@gmail.com" }
