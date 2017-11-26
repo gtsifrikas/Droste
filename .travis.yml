@@ -1,14 +1,14 @@
 language: objective-c
 osx_image: xcode9
 env:
-- DESTINATION="OS=11.0,name=iPhone 7" SCHEME="RxCache" SDK=iphonesimulator
+- DESTINATION="OS=11.0,name=iPhone 7" SCHEME="Example" SDK=iphonesimulator
 
-before_install:
+before_install: 
 - brew update
 - brew outdated carthage || brew upgrade carthage
 - carthage update --platform iOS
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- xcodebuild clean build -project RxCache.xcodeproj -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c
-- xcodebuild test -project RxCache.xcodeproj -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c
+- xcodebuild clean build -workspace Example/Example.xcworkspace -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c
+- xcodebuild test -workspace Example.xcworkspace -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c
