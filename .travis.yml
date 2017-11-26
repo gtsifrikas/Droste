@@ -4,9 +4,6 @@ env:
 - DESTINATION="OS=11.0,name=iPhone 7" SCHEME="Example" SDK=iphonesimulator
 
 before_install: 
-- brew update
-- brew outdated carthage || brew upgrade carthage
-- carthage update --platform iOS
 - gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
