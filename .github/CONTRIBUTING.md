@@ -37,18 +37,12 @@ The easiest way to start contributing is searching open issues by `help wanted` 
 1. Fork the RxCache repository.
 2. Clone your forked project into your developer machine: `git clone git@github.com:<your-github-username>/RxCache.git`
 3. Add the original project repo as upstream repository in your forked project: `git remote add upstream git@github.com:gtsifrikas/RxCache.git`
-4. Before starting a new feature make sure your forked master branch is synchronized upstream master branch. Considering you do not mere your pull request into master you can run: `git checkout master` and then `git pull upstream master`. Optionally `git push origin master`.
-5. Create a new branch. Note that the starting point is the upstream master branch HEAD. `git checkout -b my-feature-name`
+4. Before starting a new feature make sure your forked master branch is synchronized upstream master branch. Considering you do not merge your pull request into master you can run: `git checkout master` and then `git pull upstream master`. Optionally `git push origin master`.
+5. Create a new branch. Note that the starting point is the upstream master branch HEAD. `git checkout -b feature/my-feature-name`
 6. Stage all your changes `git add .` and commit them `git commit -m "Your commit message"`
 7. Make sure your branch is up to date with upstream master, `git pull --rebase upstream master`, resolve conflicts if necessary. This will move your commit to the top of git stack.
-8. Squash your commits into one commit. `git rebase -i HEAD~6` considering you did 6 commits.
-9. Push your branch into your forked remote repository.
-10. Create a new pull request adding any useful comment.
-
-
-###### Code style and conventions
-
-We try to follow our [swift style guide](https://github.com/gtsifrikas/Swift-Style-Guide). Following it is not strictly necessary to contribute and to have a pull request accepted but project maintainers try to follow it. We would love to hear your ideas to improve our code style and conventions. Feel free to contribute.
+8. Push your branch into your forked remote repository.
+9. Create a new pull request adding any useful comment.
 
 
 ### Feature proposal
