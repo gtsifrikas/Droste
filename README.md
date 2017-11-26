@@ -315,7 +315,7 @@ pod 'Droste', '~> 0.1'
 To install Droste, simply add the following line to your Cartfile:
 
 ```ogdl
-github "gtsifrikas/Droste" ~> 1.0
+github "gtsifrikas/Droste" ~> 0.1
 ```
 
 ## Author
