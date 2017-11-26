@@ -63,7 +63,7 @@ class MapTests: QuickSpec {
                     }
                     
                     it("should bubble up the error") {
-                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(CouldNotConvertStringToNumber))
+                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(CouldNotConvertStringToNumber()))
                     }
                 }
             }
@@ -90,7 +90,7 @@ class MapTests: QuickSpec {
                     }
                     
                     it("should bubble up the error") {
-                        expect(setObserver.events.first?.value.error).to(matchError(CouldNotConvertStringToNumber))
+                        expect(setObserver.events.first?.value.error).to(matchError(CouldNotConvertStringToNumber()))
                     }
                 }
             }
@@ -201,7 +201,7 @@ class MapTests: QuickSpec {
                     }
                     
                     it("should bubble the error to the mapped cache") {
-                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(RandomError))
+                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(RandomError()))
                     }
                 }
                 
@@ -226,7 +226,7 @@ class MapTests: QuickSpec {
                     }
                     
                     it("should bubble the error to the mapped cache") {
-                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(RandomError))
+                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(RandomError()))
                     }
                 }
             }
@@ -279,7 +279,7 @@ class MapTests: QuickSpec {
                     }
                     
                     it("should bubble up the error to the mapped cache") {
-                        expect(setObserver.events.first?.value.error).to(matchError(CouldNotConvertStringToNumber))
+                        expect(setObserver.events.first?.value.error).to(matchError(CouldNotConvertStringToNumber()))
                     }
                 }
                 
@@ -304,7 +304,7 @@ class MapTests: QuickSpec {
                     }
                     
                     it("should bubble the error to the mapped cache") {
-                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(RandomError))
+                        expect(mappedCacheObserver.events.first?.value.error).to(matchError(RandomError()))
                     }
                 }
             }

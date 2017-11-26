@@ -18,13 +18,13 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.tvos.deployment_target = '9.0'
 
-  s.dependency 'RxSwift', '~> 3.0'
+  s.dependency 'RxSwift'
 
   s.test_spec 'Tests' do |t|
     t.source_files = 'Tests/*.swift', 'Sources/Extensions.swift'
-    t.dependency 'RxSwift', '~> 3.0'
+    t.dependency 'RxSwift'
     t.dependency 'Nimble'
     t.dependency 'Quick'
-    t.dependency 'RxTest', '~> 3.0'
+    t.dependency 'RxTest'
   end
 end
