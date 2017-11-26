@@ -29,6 +29,10 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
         return DispatchQueue(label: "com.droste.serial", qos: .userInitiated)
     }()
     
+    private lazy var cacheResponseQueue: DispatchQueue = {
+        return DispatchQueue(label: "com.droste.response", qos: .userInitiated, attributes: .concurrent)
+    }()
+    
     /// The capacity of the cache
     public var capacity: UInt64 = 0 {
         didSet {
@@ -38,12 +42,19 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
         }
     }
     
-    public init(path: String = CacheDefaults.defaultDiskCacheLocation, capacity: UInt64 = 100 * 1024 * 1024, fileManager: FileManager = FileManager.default) {
+    public init(path: String = CacheDefaults.defaultDiskCacheLocation,
+                capacity: UInt64 = 100 * 1024 * 1024,
+                fileManager: FileManager = FileManager.default,
+                cacheResponseQueue: DispatchQueue? = nil) {
         self.path = path
         self.fileManager = fileManager
         self.capacity = capacity
         
         _ = try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
+        
+        if let cacheResponseQueue = cacheResponseQueue {
+            self.cacheResponseQueue = cacheResponseQueue
+        }
         
         cacheQueue.async {[weak self] in
             self?.calculateSize()
@@ -56,13 +67,13 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
             self.cacheQueue.async {
                 let path = self.pathForKey(key)
                 if let obj = NSKeyedUnarchiver.unarchive(with: path) as? V {
-                    DispatchQueue.main.async {
+                    self.cacheResponseQueue.async {
                         observer.onNext(obj)
                         observer.onCompleted()
                     }
                     _ = self.updateDiskAccessDateAtPath(path)
                 } else {
-                    DispatchQueue.main.async {
+                    self.cacheResponseQueue.async {
                         observer.onNext(nil)
                         observer.onCompleted()
                     }
@@ -88,12 +99,12 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
                 } else {
                     self.size -= previousSize - newSize
                 }
-                DispatchQueue.main.async {
+                self.cacheResponseQueue.async {
                     observer.on(.next(()))
                     observer.onCompleted()
                 }
             } else {
-                DispatchQueue.main.async {
+                self.cacheResponseQueue.async {
                     observer.on(.error(DrosteDiskError.diskSaveFailed))
                     observer.onCompleted()
                 }
