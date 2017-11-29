@@ -180,7 +180,7 @@ imageRamNetworkCache.get("http://an.image.url.png")
         self.imageView.image = image
     }).disposed(by: disposeBag)
 ```
-More examples [here](https://github.com/gtsifrikas/Droste/blob/feature/README/Sources/Caches.swift) 
+More examples [here](https://github.com/gtsifrikas/Droste/blob/master/Sources/Caches.swift) 
 
 ### Forward request
 In a scenario that you have composed two Caches together and you want the right hand side cache to always hit the network,  regardless if the first cache has succeded or not, you can use the forward request operator. By doing this, you are able to get the value from the first cache (if it exists) and followning the value from the second cache (if it exists). Also, note that the `.forwardRequest` operator, does not provide any guarantees on the order of the emissions to be aligned with the order of the composition.
@@ -294,7 +294,7 @@ Follow these 3 steps to run the example project:
 * Open Example/Example.xcworkspace workspace 
 * Run *Example* project
 
-You can also experiment and learn the using the *Droste Playground*, contained in *Droste.workspace*.
+You can also experiment and learn the using the *Droste Playground*, contained in *Example/Example.workspace* under Droste project.
 
 ## Installation
 
