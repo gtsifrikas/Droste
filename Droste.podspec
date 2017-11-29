@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Sources/**/*.{swift,h,m}'
   s.module_name = 'Droste'
-
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
   s.ios.deployment_target = '9.0'
 
   s.dependency 'RxSwift'
