@@ -323,6 +323,7 @@ github "gtsifrikas/Droste" ~> 0.1
 - [ ] Support macOS
 - [ ] Support linux
 - [ ] Update README to include custom Cache creation.
+- [ ] Come up with a api for TTL and support it in DiskCache and RamCache.
 
 ## Author
 
