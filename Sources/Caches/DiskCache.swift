@@ -21,16 +21,16 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
     public typealias Key = K
     public typealias Value = V
     
-    private let path: String    
+    private let path: String
     private var size: UInt64 = 0
     private let fileManager: FileManager
-
+    
     private lazy var cacheQueue: DispatchQueue = {
         return DispatchQueue(label: "com.droste.serial", qos: .userInitiated)
     }()
     
     private lazy var cacheResponseQueue: DispatchQueue = {
-        return DispatchQueue(label: "com.droste.response", qos: .userInitiated, attributes: .concurrent)
+        return DispatchQueue(label: "com.droste.response", qos: .userInitiated)
     }()
     
     /// The capacity of the cache
@@ -230,3 +230,4 @@ extension NSKeyedUnarchiver {
         return self.unarchiveObjectSafely(withFilePath: filePath)
     }
 }
+
