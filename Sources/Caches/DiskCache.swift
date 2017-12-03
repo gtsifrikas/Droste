@@ -26,8 +26,10 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
     private let fileManager: FileManager
     
     private lazy var cacheQueue: DispatchQueue = {
-        return DispatchQueue(label: "com.droste.serial", qos: .userInitiated)
+        return DispatchQueue(label: "com.droste.disk", qos: .userInitiated)
     }()
+    
+    private lazy var cacheScheduler = SerialDispatchQueueScheduler(queue: self.cacheQueue, internalSerialQueueName: "com.droste.disk.process")
     
     /// The capacity of the cache
     public var capacity: UInt64 = 0 {
@@ -51,6 +53,7 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
             self?.calculateSize()
             self?.controlCapacity()
         }
+        
     }
     
     public func get(_ key: K) -> Observable<V?> {
@@ -67,6 +70,8 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
             }
             return Disposables.create()
         })
+            .subscribeOn(cacheScheduler)
+            .observeOn(MainScheduler.instance)
     }
     
     public func set(_ value: V, for key: K) -> Observable<Void> {
@@ -92,6 +97,8 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
             }
             return Disposables.create()
         })
+            .subscribeOn(cacheScheduler)
+            .observeOn(MainScheduler.instance)
     }
     
     public func clear() {
