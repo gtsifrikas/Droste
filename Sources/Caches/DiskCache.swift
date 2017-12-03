@@ -25,11 +25,8 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
     private var size: UInt64 = 0
     private let fileManager: FileManager
     
-    private lazy var cacheQueue: DispatchQueue = {
-        return DispatchQueue(label: "com.droste.disk", qos: .userInitiated)
-    }()
-    
-    private lazy var cacheScheduler = SerialDispatchQueueScheduler(queue: self.cacheQueue, internalSerialQueueName: "com.droste.disk.process")
+    private let cacheQueue: DispatchQueue
+    private let cacheScheduler: SerialDispatchQueueScheduler
     
     /// The capacity of the cache
     public var capacity: UInt64 = 0 {
@@ -46,6 +43,18 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
         self.path = path
         self.fileManager = fileManager
         self.capacity = capacity
+        
+        var generatedQueue: DispatchQueue?
+        cacheScheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "com.droste.disk", serialQueueConfiguration: { (queue) in
+            generatedQueue = queue// we are using the configuration block of SerialDispatchQueueScheduler to get the internal queue ref, doing so it ensures the timing of the disk operations are executed as intended
+        })
+        
+        if let generatedQueue = generatedQueue {
+            cacheQueue = generatedQueue
+        } else {
+            //fallback if for some reason we don't have a reference on the internal queue
+            cacheQueue = DispatchQueue(label: "com.droste.disk", qos: .userInitiated)
+        }
         
         _ = try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
         
