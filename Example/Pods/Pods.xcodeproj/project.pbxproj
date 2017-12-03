@@ -2114,29 +2114,6 @@
 			};
 			name = Release;
 		};
-		0C570E5C2D295C829F321FC73EBAFB7B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C9D59156CA6CF8605BB1CFD83EBFF8F5 /* Droste.unit.xcconfig */;
-			buildSettings = {
-				CODE_SIGNING_REQUIRED = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-Unit-Tests-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-lswiftSwiftOnoneSupport",
-				);
-				PRODUCT_NAME = "Droste-Unit-Tests";
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-			};
-			name = Debug;
-		};
 		1E3264E295BF2FFE46711CA036E0A9F1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C7D61CF3A98284AF8463F2016518264 /* RxTest.xcconfig */;
@@ -2169,7 +2146,39 @@
 			};
 			name = Release;
 		};
-		46887B2A48461A438910384DF874D38C /* Release */ = {
+		2D1E6A8838BC633DC4E447BEF6F9E766 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5549902C5D6DE95639A7A3406A2F6C1A /* Droste.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Droste/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Droste/Droste.modulemap";
+				PRODUCT_NAME = Droste;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		47C66D10ABAF9EBECB930B582FE20E89 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C9D59156CA6CF8605BB1CFD83EBFF8F5 /* Droste.unit.xcconfig */;
 			buildSettings = {
@@ -2179,15 +2188,18 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
 				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-Unit-Tests-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-lswiftSwiftOnoneSupport",
+				);
 				PRODUCT_NAME = "Droste-Unit-Tests";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
-				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Debug;
 		};
 		4C6EF708ECE485EA5751021AEBFB31FD /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2283,35 +2295,23 @@
 			};
 			name = Release;
 		};
-		507FD2B2412CCB16F5AEE2F85391A7C6 /* Release */ = {
+		56F1BFFC0C9686138A434C0E317A0D3F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5549902C5D6DE95639A7A3406A2F6C1A /* Droste.xcconfig */;
+			baseConfigurationReference = C9D59156CA6CF8605BB1CFD83EBFF8F5 /* Droste.unit.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
+				CODE_SIGNING_REQUIRED = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Droste/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Droste/Droste.modulemap";
-				PRODUCT_NAME = Droste;
+				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-Unit-Tests-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				PRODUCT_NAME = "Droste-Unit-Tests";
 				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -2558,37 +2558,6 @@
 			};
 			name = Release;
 		};
-		D19AE6CF9614558A3E479A03051ABA05 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5549902C5D6DE95639A7A3406A2F6C1A /* Droste.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/Droste/Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MODULEMAP_FILE = "Target Support Files/Droste/Droste.modulemap";
-				PRODUCT_NAME = Droste;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		F13E60F91EE9E33DA20F6024B0024EF0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0A1048EF53B79A379E452938BBB846B9 /* Quick.xcconfig */;
@@ -2621,6 +2590,37 @@
 			};
 			name = Release;
 		};
+		FE4BC90A48FA2687C42B10A9CD24A952 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5549902C5D6DE95639A7A3406A2F6C1A /* Droste.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Droste/Droste-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Droste/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/Droste/Droste.modulemap";
+				PRODUCT_NAME = Droste;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2645,8 +2645,8 @@
 		76CB9EF5DDAFFFC51297616036946164 /* Build configuration list for PBXNativeTarget "Droste-Unit-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0C570E5C2D295C829F321FC73EBAFB7B /* Debug */,
-				46887B2A48461A438910384DF874D38C /* Release */,
+				47C66D10ABAF9EBECB930B582FE20E89 /* Debug */,
+				56F1BFFC0C9686138A434C0E317A0D3F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2654,8 +2654,8 @@
 		803472A2C9FF67F95DEA8E708E6F0724 /* Build configuration list for PBXNativeTarget "Droste" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D19AE6CF9614558A3E479A03051ABA05 /* Debug */,
-				507FD2B2412CCB16F5AEE2F85391A7C6 /* Release */,
+				FE4BC90A48FA2687C42B10A9CD24A952 /* Debug */,
+				2D1E6A8838BC633DC4E447BEF6F9E766 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

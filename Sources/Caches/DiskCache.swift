@@ -21,17 +21,12 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
     public typealias Key = K
     public typealias Value = V
     
-    private let path: String    
+    private let path: String
     private var size: UInt64 = 0
     private let fileManager: FileManager
-
-    private lazy var cacheQueue: DispatchQueue = {
-        return DispatchQueue(label: "com.droste.serial", qos: .userInitiated)
-    }()
     
-    private lazy var cacheResponseQueue: DispatchQueue = {
-        return DispatchQueue(label: "com.droste.response", qos: .userInitiated, attributes: .concurrent)
-    }()
+    private let cacheQueue: DispatchQueue
+    private let cacheScheduler: SerialDispatchQueueScheduler
     
     /// The capacity of the cache
     public var capacity: UInt64 = 0 {
@@ -44,44 +39,48 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
     
     public init(path: String = CacheDefaults.defaultDiskCacheLocation,
                 capacity: UInt64 = 100 * 1024 * 1024,
-                fileManager: FileManager = FileManager.default,
-                cacheResponseQueue: DispatchQueue? = nil) {
+                fileManager: FileManager = FileManager.default) {
         self.path = path
         self.fileManager = fileManager
         self.capacity = capacity
         
-        _ = try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
+        var generatedQueue: DispatchQueue?
+        cacheScheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "com.droste.disk", serialQueueConfiguration: { (queue) in
+            generatedQueue = queue// we are using the configuration block of SerialDispatchQueueScheduler to get the internal queue ref, doing so it ensures the timing of the disk operations are executed as intended
+        })
         
-        if let cacheResponseQueue = cacheResponseQueue {
-            self.cacheResponseQueue = cacheResponseQueue
+        if let generatedQueue = generatedQueue {
+            cacheQueue = generatedQueue
+        } else {
+            //fallback if for some reason we don't have a reference on the internal queue
+            cacheQueue = DispatchQueue(label: "com.droste.disk", qos: .userInitiated)
         }
+        
+        _ = try! fileManager.createDirectory(atPath: path, withIntermediateDirectories: true, attributes: [:])
         
         cacheQueue.async {[weak self] in
             self?.calculateSize()
             self?.controlCapacity()
         }
+        
     }
     
     public func get(_ key: K) -> Observable<V?> {
         return Observable.create({ (observer) -> Disposable in
-            self.cacheQueue.async {
-                let path = self.pathForKey(key)
-                if let obj = NSKeyedUnarchiver.unarchive(with: path) as? V {
-                    self.cacheResponseQueue.async {
-                        observer.onNext(obj)
-                        observer.onCompleted()
-                    }
-                    _ = self.updateDiskAccessDateAtPath(path)
-                } else {
-                    self.cacheResponseQueue.async {
-                        observer.onNext(nil)
-                        observer.onCompleted()
-                    }
-                    _ = try? self.fileManager.removeItem(atPath: path)
-                }
+            let path = self.pathForKey(key)
+            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? V {
+                observer.onNext(obj)
+                observer.onCompleted()
+                _ = self.updateDiskAccessDateAtPath(path)
+            } else {
+                observer.onNext(nil)
+                observer.onCompleted()
+                _ = try? self.fileManager.removeItem(atPath: path)
             }
             return Disposables.create()
         })
+            .subscribeOn(cacheScheduler)
+            .observeOn(MainScheduler.instance)
     }
     
     public func set(_ value: V, for key: K) -> Observable<Void> {
@@ -99,18 +98,16 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
                 } else {
                     self.size -= previousSize - newSize
                 }
-                self.cacheResponseQueue.async {
-                    observer.on(.next(()))
-                    observer.onCompleted()
-                }
+                observer.on(.next(()))
+                observer.onCompleted()
             } else {
-                self.cacheResponseQueue.async {
-                    observer.on(.error(DrosteDiskError.diskSaveFailed))
-                    observer.onCompleted()
-                }
+                observer.on(.error(DrosteDiskError.diskSaveFailed))
+                observer.onCompleted()
             }
             return Disposables.create()
         })
+            .subscribeOn(cacheScheduler)
+            .observeOn(MainScheduler.instance)
     }
     
     public func clear() {
