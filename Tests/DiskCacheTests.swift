@@ -224,7 +224,7 @@ class DiskCacheTests: QuickSpec {
                         }
                         
                         it("should remove all the files on disk") {
-                            expect(filesInDirectory(directory: path)).toEventually(beEmpty())
+                            expect(filesInDirectory(directory: path)).toEventually(beEmpty(), timeout: 10.0)
                         }
                         
                         context("when calling get") {
