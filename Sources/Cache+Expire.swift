@@ -14,9 +14,9 @@ public enum Expiry {
     case date(Foundation.Date)
 }
 
-extension Cache where Value: NSCoding {
+public extension Cache where Value: NSCoding {
     
-    public func expires(expiry: Expiry) -> CompositeCache<Key, Value> {
+    public func expires(at expiry: Expiry) -> CompositeCache<Key, Value> {
         let internalCache = self.mapValues(f: { (newValue: Value) -> CacheExpirableDTO in
             return CacheExpirableDTO(value: newValue, expiryDate: self.date(for: expiry))
         }, fInv: { (cacheDTO: CacheExpirableDTO) -> Value in
