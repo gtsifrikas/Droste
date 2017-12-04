@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         let imageCache = DrosteCaches.sharedImageCache
         
         imageCache
+            .expires(at: .seconds(10))
             .get(URL(string: "https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[weak self] (image) in
