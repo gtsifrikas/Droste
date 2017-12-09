@@ -15,8 +15,8 @@ public enum Expiry {
 }
 
 public protocol ExpirableCache: Cache {
-    func get(_ key: Self.Key) -> Observable<CacheExpirableDTO?>
-    func set(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void>
+    func _getExpirableDTO(_ key: Self.Key) -> Observable<CacheExpirableDTO?>
+    func _setExpirableDTO(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void>
 }
 
 public extension Cache where Value: NSCoding, Self: ExpirableCache {
@@ -25,7 +25,7 @@ public extension Cache where Value: NSCoding, Self: ExpirableCache {
         return
             CompositeCache(
                 get: {(key: Key) -> Observable<Value?> in
-                    return self.get(key)
+                    return self._getExpirableDTO(key)
                         .map({ (cacheDTO: CacheExpirableDTO?) -> Value? in
                             //TODO: check the expiry
                             guard let cacheDTO = cacheDTO else { return nil }
@@ -35,7 +35,7 @@ public extension Cache where Value: NSCoding, Self: ExpirableCache {
                 }
                 , set: {(value: Value, key: Key) in
                     let cacheDTO = CacheExpirableDTO(value: value, expiryDate: self.date(for: expiry))
-                    return self.set(cacheDTO, for: key)
+                    return self._setExpirableDTO(cacheDTO, for: key)
                 },
                   clear: clear)
     }
