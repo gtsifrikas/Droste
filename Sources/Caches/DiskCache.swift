@@ -18,6 +18,7 @@ public enum DrosteDiskError: Error {
 }
 
 public class DiskCache<K, V>: Cache, ExpirableCache where K: StringConvertible, V: NSCoding {
+    
     public typealias Key = K
     public typealias Value = V
     
@@ -62,13 +63,26 @@ public class DiskCache<K, V>: Cache, ExpirableCache where K: StringConvertible, 
             self?.calculateSize()
             self?.controlCapacity()
         }
-        
+    }
+    
+    public func get(_ key: K) -> Observable<CacheExpirableDTO?> {
+        return self.getData(key)
+            .map({ (object) -> CacheExpirableDTO? in
+               return object as? CacheExpirableDTO
+            })
     }
     
     public func get(_ key: K) -> Observable<V?> {
+        return self.getData(key)
+            .map({ (object) -> V? in
+                return object as? V
+            })
+    }
+    
+    func getData(_ key: K) -> Observable<AnyObject?> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
-            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? V {
+            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? AnyObject {
                 observer.onNext(obj)
                 observer.onCompleted()
                 _ = self.updateDiskAccessDateAtPath(path)
@@ -83,7 +97,15 @@ public class DiskCache<K, V>: Cache, ExpirableCache where K: StringConvertible, 
             .observeOn(MainScheduler.instance)
     }
     
+    public func set(_ value: CacheExpirableDTO, for key: K) -> Observable<Void> {
+        return self.setData(value, for: key)
+    }
+    
     public func set(_ value: V, for key: K) -> Observable<Void> {
+        return self.setData(value, for: key)
+    }
+    
+    func setData(_ value: AnyObject, for key: K) -> Observable<Void> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
             let previousSize = self.sizeForFileAtPath(path)

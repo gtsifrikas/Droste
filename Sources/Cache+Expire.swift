@@ -14,48 +14,28 @@ public enum Expiry {
     case date(Foundation.Date)
 }
 
-public protocol ExpirableCache {}
+public protocol ExpirableCache: Cache {
+    func get(_ key: Self.Key) -> Observable<CacheExpirableDTO?>
+    func set(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void>
+}
 
 public extension Cache where Value: NSCoding, Self: ExpirableCache {
     
     public func expires(at expiry: Expiry) -> CompositeCache<Key, Value> {
-//        return
-//            CompositeCache(
-//                get: {(key: Key) -> Observable<Value?> in
-//                    return internalCache.get(key).map({ (dto) -> Value? in
-//                        return dto?.value as? Value ?? nil
-//                    })
-//                }
-//                , set: {value, key in
-//                    let dto = CacheExpirableDTO(value: value, expiryDate: self.date(for: expiry))
-//                    return internalCache.set(dto, for: key)
-//                },
-//          clear: clear)
         return
             CompositeCache(
                 get: {(key: Key) -> Observable<Value?> in
                     return self.get(key)
-                        .map({ (possibleDTO: NSCoding?) -> Value? in
+                        .map({ (cacheDTO: CacheExpirableDTO?) -> Value? in
                             //TODO: check the expiry
-                            return possibleDTO as? Value
+                            guard let cacheDTO = cacheDTO else { return nil }
+                            guard !cacheDTO.isExpired() else { return nil }
+                            return cacheDTO.value as? Value
                         })
                 }
                 , set: {(value: Value, key: Key) in
-                    return Observable.just(value)
-                        .map({ (value: Value) -> CacheExpirableDTO in
-                            return CacheExpirableDTO(value: value, expiryDate: self.date(for: expiry))
-                        })
-                        .flatMap({ (newDTO: CacheExpirableDTO) -> Observable<Void> in
-                            return Observable.just(newDTO).flatMap({ (newDTO) -> Observable<Void> in
-                                let internaCache = self.mapValues(f: { (value: Value) -> CacheExpirableDTO in
-                                    //ignore
-                                    fatalError("Should not reach this point.")
-                                }, fInv: { (dto: CacheExpirableDTO) -> Value in
-                                    return dto.value as! Self.Value
-                                })
-                                return internaCache.set(newDTO, for: key)
-                            })
-                        })
+                    let cacheDTO = CacheExpirableDTO(value: value, expiryDate: self.date(for: expiry))
+                    return self.set(cacheDTO, for: key)
                 },
                   clear: clear)
     }
@@ -72,9 +52,7 @@ public extension Cache where Value: NSCoding, Self: ExpirableCache {
     }
 }
 
-
-@objc(_TtC6DrosteP33_82153F3EB6261FB7BD1F3A359158A49D17CacheExpirableDTO)
-fileprivate class CacheExpirableDTO: NSObject, NSCoding {
+public class CacheExpirableDTO: NSObject, NSCoding {
     let value: AnyObject
     let expiryDate: Date
 
@@ -87,7 +65,7 @@ fileprivate class CacheExpirableDTO: NSObject, NSCoding {
         return expiryDate.isInThePast
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         guard let val = aDecoder.decodeObject(forKey: "value"),
             let expiry = aDecoder.decodeObject(forKey: "expiryDate") as? Date else {
                 return nil
@@ -98,7 +76,7 @@ fileprivate class CacheExpirableDTO: NSObject, NSCoding {
         super.init()
     }
     
-    func encode(with aCoder: NSCoder) {
+    public func encode(with aCoder: NSCoder) {
         aCoder.encode(value, forKey: "value")
         aCoder.encode(expiryDate, forKey: "expiryDate")
     }
