@@ -10,11 +10,34 @@ import Foundation
 import RxSwift
 import Droste
 
-class CacheFake<K, V>: Cache {
+
+class CacheFake<K, V>: Cache, ExpirableCache {
 
     typealias Key = K
     typealias Value = V
 
+    var cacheDTORequest: PublishSubject<CacheExpirableDTO?>!
+    var numberOfTimesCalledCacheDTOGet = 0//CacheDTO
+    var didCallExpirableDTOGetWithKey: K?
+    func _getExpirableDTO(_ key: K) -> Observable<CacheExpirableDTO?> {
+        numberOfTimesCalledCacheDTOGet += 1
+        cacheDTORequest = PublishSubject()
+        queueUsedForTheLastCall = currentQueueSpecific()
+        didCallExpirableDTOGetWithKey = key
+        return cacheDTORequest.asObservable()
+    }
+    
+    var numberOfTimesCalledCacheDTOSet = 0//CacheDTO
+    var didCalledCacheDTOSetWithKey: K?
+    var didCalledCacheDTOSetWithValue: CacheExpirableDTO?
+    func _setExpirableDTO(_ value: CacheExpirableDTO, for key: K) -> Observable<Void> {
+        numberOfTimesCalledCacheDTOSet += 1
+        didCalledCacheDTOSetWithKey = key
+        didCalledCacheDTOSetWithValue = value
+        queueUsedForTheLastCall = currentQueueSpecific()
+        return Observable.just(())
+    }
+    
     var queueUsedForTheLastCall: UnsafeMutableRawPointer!
 
     var request: PublishSubject<V?>!

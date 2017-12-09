@@ -17,7 +17,7 @@ public enum DrosteDiskError: Error {
     case diskSaveFailed
 }
 
-final public class DiskCache<K, V>: Cache, ExpirableCache where K: StringConvertible, V: NSCoding {
+final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V: NSCoding {
     
     public typealias Key = K
     public typealias Value = V
