@@ -27,7 +27,6 @@ public extension Cache where Value: NSCoding, Self: ExpirableCache {
                 get: {(key: Key) -> Observable<Value?> in
                     return self._getExpirableDTO(key)
                         .map({ (cacheDTO: CacheExpirableDTO?) -> Value? in
-                            //TODO: check the expiry
                             guard let cacheDTO = cacheDTO else { return nil }
                             guard !cacheDTO.isExpired() else { return nil }
                             return cacheDTO.value as? Value

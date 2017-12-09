@@ -26,7 +26,7 @@ class ViewController: UIViewController {
         let diskCache = DiskCache<URL, NSData>()
         let ramCache = RamCache<URL, NSData>()
         
-        let dataCache = ramCache + (diskCache.expires(at: .never) + networkFetcher).reuseInFlight()
+        let dataCache = ramCache + (diskCache.expires(at: .seconds(60)) + networkFetcher).reuseInFlight()
         
         let imageCache = dataCache
             .mapValues(
