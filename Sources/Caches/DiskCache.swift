@@ -65,7 +65,7 @@ public class DiskCache<K, V>: Cache, ExpirableCache where K: StringConvertible, 
         }
     }
     
-    public func get(_ key: K) -> Observable<CacheExpirableDTO?> {
+    public func _getExpirableDTO(_ key: K) -> Observable<CacheExpirableDTO?> {
         return self.getData(key)
             .map({ (object) -> CacheExpirableDTO? in
                return object as? CacheExpirableDTO
@@ -97,7 +97,7 @@ public class DiskCache<K, V>: Cache, ExpirableCache where K: StringConvertible, 
             .observeOn(MainScheduler.instance)
     }
     
-    public func set(_ value: CacheExpirableDTO, for key: K) -> Observable<Void> {
+    public func _setExpirableDTO(_ value: CacheExpirableDTO, for key: K) -> Observable<Void> {
         return self.setData(value, for: key)
     }
     
