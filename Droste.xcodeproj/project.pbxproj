@@ -42,6 +42,8 @@
 		C6A4EC841F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4EC821F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h */; };
 		C6A4EC851F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A4EC831F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.m */; };
 		C6A4EC9A1F9BA7E300BD60DA /* NSKeyedUnarchiver+Swift.h in Headers */ = {isa = PBXBuildFile; fileRef = C6A4EC821F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h */; };
+		C6E8538F1FDC6BFD0060442B /* ExpireTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E8538E1FDC6BFD0060442B /* ExpireTests.swift */; };
+		C6E853911FDC71380060442B /* ExpirableCacheFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6E853901FDC71380060442B /* ExpirableCacheFake.swift */; };
 		C6FAD4D91F9BACC30057A9B6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6775D471F9B94CE0004AE11 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
@@ -97,6 +99,8 @@
 		C6A4EC821F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSKeyedUnarchiver+Swift.h"; sourceTree = "<group>"; };
 		C6A4EC831F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSKeyedUnarchiver+Swift.m"; sourceTree = "<group>"; };
 		C6A4EC9C1F9BA93400BD60DA /* RxSwift-umbrella.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "RxSwift-umbrella.h"; path = "Example/Pods/Target Support Files/RxSwift/RxSwift-umbrella.h"; sourceTree = "<group>"; };
+		C6E8538E1FDC6BFD0060442B /* ExpireTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpireTests.swift; sourceTree = "<group>"; };
+		C6E853901FDC71380060442B /* ExpirableCacheFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpirableCacheFake.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +159,8 @@
 				C60352351FA6107200C23D82 /* MapTests.swift */,
 				C68EFD391FA73BBB00236C52 /* SwitchTests.swift */,
 				C6584C821FAA199000E50D0B /* RamCacheTests.swift */,
+				C6E8538E1FDC6BFD0060442B /* ExpireTests.swift */,
+				C6E853901FDC71380060442B /* ExpirableCacheFake.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -345,6 +351,7 @@
 				C6775D561F9B94CF0004AE11 /* Cache+Map.swift in Sources */,
 				C6775D661F9B94F40004AE11 /* RamCache.swift in Sources */,
 				C6A4EC851F9B9EEA00BD60DA /* NSKeyedUnarchiver+Swift.m in Sources */,
+				C6E8538F1FDC6BFD0060442B /* ExpireTests.swift in Sources */,
 				C6775D5D1F9B94CF0004AE11 /* Cache+Compose.swift in Sources */,
 				C67DB6E01FD5F47D0033F5E4 /* Cache+Expire.swift in Sources */,
 				C6775D581F9B94CF0004AE11 /* Cache.swift in Sources */,
@@ -356,6 +363,7 @@
 				C6775D681F9B94F40004AE11 /* DiskCache.swift in Sources */,
 				C6775D571F9B94CF0004AE11 /* CompositeCache.swift in Sources */,
 				C6775D521F9B94CF0004AE11 /* Cache+SkipWhile.swift in Sources */,
+				C6E853911FDC71380060442B /* ExpirableCacheFake.swift in Sources */,
 				C6775D531F9B94CF0004AE11 /* Cache+Switch.swift in Sources */,
 				C6775D5B1F9B94CF0004AE11 /* Cache+ForwardRequest.swift in Sources */,
 				C6A4EC811F9B9E9300BD60DA /* ConcurrentDictionary.swift in Sources */,
