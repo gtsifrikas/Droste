@@ -37,7 +37,7 @@ class ExpireTests: QuickSpec {
                     }
                     
                     it("should create the correct CacheExpirableDTO", closure: {
-                        let createdDTO = cache.didCalledCacheDTOSetWithValue as? CacheExpirableDTO
+                        let createdDTO = cache.didCalledGenericDataSetWithValue as? CacheExpirableDTO
                         expect(createdDTO?.value as? String).to(equal("Hello World"))
                         expect(createdDTO?.expiryDate).to(equal(Date.distantFuture))
                     })
@@ -52,13 +52,13 @@ class ExpireTests: QuickSpec {
                             
                             scheduler.scheduleAt(1) {
                                 let cacheExpirableDTO = CacheExpirableDTO(value: 12345 as AnyObject, expiryDate: Date.distantFuture)
-                                cache.cacheDTORequest.on(.next(cacheExpirableDTO))
+                                cache.genericDataRequest.on(.next(cacheExpirableDTO))
                             }
                             scheduler.start()
                         }
                         
-                        it("should invoke _getExpirableDTO of cache", closure: {
-                            expect(cache.numberOfTimesCalledCacheDTOGet).to(equal(1))
+                        it("should invoke getData of cache", closure: {
+                            expect(cache.numberOfTimesCalledGenericDataGet).to(equal(1))
                         })
                         
                         it("should return nil", closure: {
@@ -73,13 +73,13 @@ class ExpireTests: QuickSpec {
                             
                             scheduler.scheduleAt(1) {
                                 let cacheExpirableDTO = CacheExpirableDTO(value: "Hello World" as AnyObject, expiryDate: Date.distantFuture)
-                                cache.cacheDTORequest.on(.next(cacheExpirableDTO))
+                                cache.genericDataRequest.on(.next(cacheExpirableDTO))
                             }
                             scheduler.start()
                         }
                         
-                        it("should invoke _getExpirableDTO of cache", closure: {
-                            expect(cache.numberOfTimesCalledCacheDTOGet).to(equal(1))
+                        it("should invoke getData of cache", closure: {
+                            expect(cache.numberOfTimesCalledGenericDataGet).to(equal(1))
                         })
                         
                         it("should return the correct value from the DTO", closure: {
@@ -94,13 +94,13 @@ class ExpireTests: QuickSpec {
                             }
                             
                             scheduler.scheduleAt(1) {
-                                cache.cacheDTORequest.on(.next(nil))
+                                cache.genericDataRequest.on(.next(nil))
                             }
                             scheduler.start()
                         }
                         
-                        it("should invoke _getExpirableDTO of cache", closure: {
-                            expect(cache.numberOfTimesCalledCacheDTOGet).to(equal(1))
+                        it("should invoke getData of cache", closure: {
+                            expect(cache.numberOfTimesCalledGenericDataGet).to(equal(1))
                         })
                         
                         it("should return the correct value from the DTO", closure: {
@@ -122,7 +122,7 @@ class ExpireTests: QuickSpec {
                     }
                     
                     it("should create the correct CacheExpirableDTO", closure: {
-                        let createdDTO = cache.didCalledCacheDTOSetWithValue as? CacheExpirableDTO
+                        let createdDTO = cache.didCalledGenericDataSetWithValue as? CacheExpirableDTO
                         expect(createdDTO?.value as? String).to(equal("Hello World"))
                         expect(Int(createdDTO!.expiryDate.timeIntervalSinceNow))
                             .to(equal(Int(Date(timeIntervalSinceNow: 10).timeIntervalSinceNow)))
@@ -137,13 +137,13 @@ class ExpireTests: QuickSpec {
                         
                         scheduler.scheduleAt(1) {
                             let cacheExpirableDTO = CacheExpirableDTO(value: "Hello World" as AnyObject, expiryDate: Date(timeIntervalSinceNow: 1))
-                            cache.cacheDTORequest.on(.next(cacheExpirableDTO))
+                            cache.genericDataRequest.on(.next(cacheExpirableDTO))
                         }
                         scheduler.start()
                     }
                     
-                    it("should invoke _getExpirableDTO of cache", closure: {
-                        expect(cache.numberOfTimesCalledCacheDTOGet).to(equal(1))
+                    it("should invoke getData of cache", closure: {
+                        expect(cache.numberOfTimesCalledGenericDataGet).to(equal(1))
                     })
                     
                     it("should return the correct value from the DTO", closure: {
@@ -159,13 +159,13 @@ class ExpireTests: QuickSpec {
                         
                         scheduler.scheduleAt(1) {
                             let cacheExpirableDTO = CacheExpirableDTO(value: "Hello World" as AnyObject, expiryDate: Date(timeIntervalSinceNow: -1))
-                            cache.cacheDTORequest.on(.next(cacheExpirableDTO))
+                            cache.genericDataRequest.on(.next(cacheExpirableDTO))
                         }
                         scheduler.start()
                     }
                     
-                    it("should invoke _getExpirableDTO of cache", closure: {
-                        expect(cache.numberOfTimesCalledCacheDTOGet).to(equal(1))
+                    it("should invoke getData of cache", closure: {
+                        expect(cache.numberOfTimesCalledGenericDataGet).to(equal(1))
                     })
                     
                     it("should return the correct value from the DTO", closure: {
