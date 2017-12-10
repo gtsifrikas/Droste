@@ -71,8 +71,6 @@ public class CacheExpirableDTO: NSObject, NSCoding {
     }
     
     func isExpired() -> Bool {
-        print("Expiry date: \(expiryDate)")
-        print("Dates diff in sec: \(expiryDate.timeIntervalSinceNow)")
         return expiryDate.isInThePast
     }
     
