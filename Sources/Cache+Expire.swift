@@ -19,7 +19,7 @@ public protocol ExpirableCache: Cache {
     func _setExpirableDTO(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void>
 }
 
-public extension Cache where Value: NSCoding, Self: ExpirableCache {
+public extension ExpirableCache {
     
     public func expires(at expiry: Expiry) -> CompositeCache<Key, Value> {
         return
@@ -33,7 +33,7 @@ public extension Cache where Value: NSCoding, Self: ExpirableCache {
                         })
                 }
                 , set: {(value: Value, key: Key) in
-                    let cacheDTO = CacheExpirableDTO(value: value, expiryDate: self.date(for: expiry))
+                    let cacheDTO = CacheExpirableDTO(value: value as AnyObject, expiryDate: self.date(for: expiry))
                     return self._setExpirableDTO(cacheDTO, for: key)
                 },
                   clear: clear)
@@ -61,6 +61,8 @@ public class CacheExpirableDTO: NSObject, NSCoding {
     }
     
     func isExpired() -> Bool {
+        print("Expiry date: \(expiryDate)")
+        print("Dates diff in sec: \(expiryDate.timeIntervalSinceNow)")
         return expiryDate.isInThePast
     }
     
