@@ -67,22 +67,22 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
     
     public func _getExpirableDTO(_ key: K) -> Observable<CacheExpirableDTO?> {
         return self.getData(key)
-            .map({ (object) -> CacheExpirableDTO? in
-               return object as? CacheExpirableDTO
+            .map({ (object: CacheExpirableDTO?) -> CacheExpirableDTO? in
+               return object
             })
     }
     
     public func get(_ key: K) -> Observable<V?> {
         return self.getData(key)
-            .map({ (object) -> V? in
-                return object as? V
+            .map({ (object: V?) -> V? in
+                return object
             })
     }
     
-    private func getData(_ key: K) -> Observable<AnyObject?> {
+    private func getData<ValueType>(_ key: K) -> Observable<ValueType?> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
-            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? AnyObject {
+            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? ValueType {
                 observer.onNext(obj)
                 observer.onCompleted()
                 _ = self.updateDiskAccessDateAtPath(path)
