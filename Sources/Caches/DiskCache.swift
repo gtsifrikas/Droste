@@ -65,24 +65,10 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
         }
     }
     
-    public func _getExpirableDTO(_ key: K) -> Observable<CacheExpirableDTO?> {
-        return self.getData(key)
-            .map({ (object: CacheExpirableDTO?) -> CacheExpirableDTO? in
-               return object
-            })
-    }
-    
-    public func get(_ key: K) -> Observable<V?> {
-        return self.getData(key)
-            .map({ (object: V?) -> V? in
-                return object
-            })
-    }
-    
-    private func getData<ValueType>(_ key: K) -> Observable<ValueType?> {
+    public func getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
-            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? ValueType {
+            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? GenericValueType {
                 observer.onNext(obj)
                 observer.onCompleted()
                 _ = self.updateDiskAccessDateAtPath(path)
@@ -96,16 +82,8 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
             .subscribeOn(cacheScheduler)
             .observeOn(MainScheduler.instance)
     }
-    
-    public func _setExpirableDTO(_ value: CacheExpirableDTO, for key: K) -> Observable<Void> {
-        return self.setData(value, for: key)
-    }
-    
-    public func set(_ value: V, for key: K) -> Observable<Void> {
-        return self.setData(value, for: key)
-    }
-    
-    private func setData(_ value: AnyObject, for key: K) -> Observable<Void> {
+
+    public func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
             let previousSize = self.sizeForFileAtPath(path)

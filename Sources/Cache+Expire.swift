@@ -15,8 +15,30 @@ public enum Expiry {
 }
 
 public protocol ExpirableCache: Cache {
+    
     func _getExpirableDTO(_ key: Self.Key) -> Observable<CacheExpirableDTO?>
     func _setExpirableDTO(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void>
+    
+    func getData<GenericValueType>(_ key: Self.Key) -> Observable<GenericValueType?>
+    func setData<GenericValueType>(_ value: GenericValueType, for key: Self.Key) -> Observable<Void>
+}
+
+public extension ExpirableCache {
+    public func get(_ key: Key) -> Observable<Value?> {
+        return getData(key)
+    }
+    
+    public func _getExpirableDTO(_ key: Self.Key) -> Observable<CacheExpirableDTO?> {
+        return getData(key)
+    }
+    
+    public func set(_ value: Value, for key: Key) -> Observable<Void> {
+        return setData(value, for: key)
+    }
+    
+    public func _setExpirableDTO(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void> {
+        return setData(value, for: key)
+    }
 }
 
 public extension ExpirableCache {
