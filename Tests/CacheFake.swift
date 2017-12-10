@@ -13,33 +13,27 @@ import Droste
 
 class CacheFake<K, V>: Cache, ExpirableCache {
     
-    func getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
-        return Observable.empty()
-    }
-    
-    func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
-        return Observable.empty()
-    }
-    
-
     typealias Key = K
     typealias Value = V
 
-    var cacheDTORequest: PublishSubject<CacheExpirableDTO?>!
+    var cacheDTORequest: PublishSubject<Any?>!
     var numberOfTimesCalledCacheDTOGet = 0//CacheDTO
     var didCallExpirableDTOGetWithKey: K?
-    func _getExpirableDTO(_ key: K) -> Observable<CacheExpirableDTO?> {
+    
+    func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
         numberOfTimesCalledCacheDTOGet += 1
         cacheDTORequest = PublishSubject()
         queueUsedForTheLastCall = currentQueueSpecific()
         didCallExpirableDTOGetWithKey = key
-        return cacheDTORequest.asObservable()
+        return cacheDTORequest.map({ $0 as? GenericValueType })
     }
+
     
     var numberOfTimesCalledCacheDTOSet = 0//CacheDTO
     var didCalledCacheDTOSetWithKey: K?
-    var didCalledCacheDTOSetWithValue: CacheExpirableDTO?
-    func _setExpirableDTO(_ value: CacheExpirableDTO, for key: K) -> Observable<Void> {
+    var didCalledCacheDTOSetWithValue: Any?
+    
+    func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         numberOfTimesCalledCacheDTOSet += 1
         didCalledCacheDTOSetWithKey = key
         didCalledCacheDTOSetWithValue = value

@@ -37,7 +37,7 @@ class ExpireTests: QuickSpec {
                     }
                     
                     it("should create the correct CacheExpirableDTO", closure: {
-                        let createdDTO = cache.didCalledCacheDTOSetWithValue
+                        let createdDTO = cache.didCalledCacheDTOSetWithValue as? CacheExpirableDTO
                         expect(createdDTO?.value as? String).to(equal("Hello World"))
                         expect(createdDTO?.expiryDate).to(equal(Date.distantFuture))
                     })
@@ -122,7 +122,7 @@ class ExpireTests: QuickSpec {
                     }
                     
                     it("should create the correct CacheExpirableDTO", closure: {
-                        let createdDTO = cache.didCalledCacheDTOSetWithValue
+                        let createdDTO = cache.didCalledCacheDTOSetWithValue as? CacheExpirableDTO
                         expect(createdDTO?.value as? String).to(equal("Hello World"))
                         expect(Int(createdDTO!.expiryDate.timeIntervalSinceNow))
                             .to(equal(Int(Date(timeIntervalSinceNow: 10).timeIntervalSinceNow)))
