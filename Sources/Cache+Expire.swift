@@ -15,10 +15,6 @@ public enum Expiry {
 }
 
 public protocol ExpirableCache: Cache {
-    
-    func _getExpirableDTO(_ key: Self.Key) -> Observable<CacheExpirableDTO?>
-    func _setExpirableDTO(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void>
-    
     func getData<GenericValueType>(_ key: Self.Key) -> Observable<GenericValueType?>
     func setData<GenericValueType>(_ value: GenericValueType, for key: Self.Key) -> Observable<Void>
 }
@@ -27,16 +23,8 @@ public extension ExpirableCache {
     public func get(_ key: Key) -> Observable<Value?> {
         return getData(key)
     }
-    
-    public func _getExpirableDTO(_ key: Self.Key) -> Observable<CacheExpirableDTO?> {
-        return getData(key)
-    }
-    
+
     public func set(_ value: Value, for key: Key) -> Observable<Void> {
-        return setData(value, for: key)
-    }
-    
-    public func _setExpirableDTO(_ value: CacheExpirableDTO, for key: Self.Key) -> Observable<Void> {
         return setData(value, for: key)
     }
 }
@@ -47,7 +35,7 @@ public extension ExpirableCache {
         return
             CompositeCache(
                 get: {(key: Key) -> Observable<Value?> in
-                    return self._getExpirableDTO(key)
+                    return self.getData(key)
                         .map({ (cacheDTO: CacheExpirableDTO?) -> Value? in
                             guard let cacheDTO = cacheDTO else { return nil }
                             guard !cacheDTO.isExpired() else { return nil }
@@ -56,7 +44,7 @@ public extension ExpirableCache {
                 }
                 , set: {(value: Value, key: Key) in
                     let cacheDTO = CacheExpirableDTO(value: value as AnyObject, expiryDate: self.date(for: expiry))
-                    return self._setExpirableDTO(cacheDTO, for: key)
+                    return self.setData(cacheDTO, for: key)
                 },
                   clear: clear)
     }
