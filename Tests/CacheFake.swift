@@ -12,6 +12,15 @@ import Droste
 
 
 class CacheFake<K, V>: Cache, ExpirableCache {
+    
+    func getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
+        return Observable.empty()
+    }
+    
+    func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
+        return Observable.empty()
+    }
+    
 
     typealias Key = K
     typealias Value = V
