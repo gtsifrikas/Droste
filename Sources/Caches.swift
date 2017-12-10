@@ -14,18 +14,18 @@ public struct DrosteCaches {
     public static var sharedJSONCache = jsonCache()
     public static var sharedImageCache = imageCache()
     
-    public static func dataCache() -> CompositeCache<URL, NSData> {
+    public static func dataCache(expires: Expiry = .never) -> CompositeCache<URL, NSData> {
         let networkFetcher = NetworkFetcher()
             .mapKeys { (url: URL) -> URLRequest in//map url to urlrequest
                 return URLRequest(url: url)
         }
-        let diskCache = DiskCache<URL, NSData>()
-        let ramCache = RamCache<URL, NSData>()
+        let diskCache = DiskCache<URL, NSData>().expires(at: expires)
+        let ramCache = RamCache<URL, NSData>().expires(at: expires)
         return ramCache + (diskCache + networkFetcher).reuseInFlight()
     }
     
-    public static func jsonCache() -> CompositeCache<URL, AnyObject> {
-        return dataCache()
+    public static func jsonCache(expires: Expiry = .never) -> CompositeCache<URL, AnyObject> {
+        return dataCache(expires: expires)
             .mapValues(f: { (data) -> AnyObject in
                 //convert NSData to json object
                 return try JSONSerialization.jsonObject(with: data as Data, options: [.allowFragments]) as AnyObject
@@ -35,8 +35,8 @@ public struct DrosteCaches {
             })
     }
     
-    public static func imageCache() -> CompositeCache<URL, UIImage> {
-        return dataCache()
+    public static func imageCache(expires: Expiry = .never) -> CompositeCache<URL, UIImage> {
+        return dataCache(expires: expires)
             .mapValues(
                 f: { (data) -> UIImage in
                     return UIImage(data: data as Data)!
