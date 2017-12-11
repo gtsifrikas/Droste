@@ -23,12 +23,10 @@ class ViewController: UIViewController {
                 return URLRequest(url: url)
         }
         
-        let diskCache = DiskCache<URL, NSData>()
-        let ramCache = RamCache<URL, NSData>()
+        let ramCache = RamCache<URL, NSData>().expires(at: .seconds(30))
+        let diskCache = DiskCache<URL, NSData>().expires(at: .seconds(120))
         
-        let dataCache =
-            ramCache.expires(at: .seconds(30)) +
-            (diskCache.expires(at: .seconds(120)) + networkFetcher).reuseInFlight()
+        let dataCache = ramCache + (diskCache + networkFetcher).reuseInFlight()
         
         let imageCache = dataCache
             .mapValues(
