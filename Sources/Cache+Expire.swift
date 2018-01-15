@@ -9,7 +9,6 @@ import Foundation
 import RxSwift
 
 public enum Expiry {
-    case never
     case seconds(TimeInterval)
     case date(Foundation.Date)
 }
@@ -51,8 +50,6 @@ public extension ExpirableCache {
     
     private func date(for expiry: Expiry) -> Date {
         switch expiry {
-        case .never:
-            return Date.distantFuture
         case .seconds(let seconds):
             return Date().addingTimeInterval(seconds)
         case .date(let date):

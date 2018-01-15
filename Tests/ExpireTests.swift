@@ -25,10 +25,10 @@ class ExpireTests: QuickSpec {
                 cacheObserver = scheduler.createObserver(String.self)
             }
             
-            context("when does not expires", {
+            context("when does not expires in the near future", {
                 beforeEach {
                     cache = CacheFake()
-                    sut = cache.expires(at: .never)
+                    sut = cache.expires(at: .date(.distantFuture))
                 }
                 
                 context("when calling set", {
