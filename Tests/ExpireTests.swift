@@ -21,13 +21,13 @@ class ExpireTests: QuickSpec {
             var sut: CompositeCache<Int, String>!
             
             beforeEach {
+                cache = CacheFake()
                 scheduler = TestScheduler(initialClock: 0)
                 cacheObserver = scheduler.createObserver(String.self)
             }
             
             context("when does not expires in the near future", {
                 beforeEach {
-                    cache = CacheFake()
                     sut = cache.expires(at: .date(.distantFuture))
                 }
                 
@@ -158,7 +158,7 @@ class ExpireTests: QuickSpec {
                         }
                         
                         scheduler.scheduleAt(1) {
-                            let cacheExpirableDTO = CacheExpirableDTO(value: "Hello World" as AnyObject, expiryDate: Date(timeIntervalSinceNow: -1))
+                            let cacheExpirableDTO = CacheExpirableDTO(value: "Hello World Expired" as AnyObject, expiryDate: Date(timeIntervalSinceNow: -1))
                             cache.genericDataRequest.on(.next(cacheExpirableDTO))
                         }
                         scheduler.start()
@@ -169,7 +169,7 @@ class ExpireTests: QuickSpec {
                     })
                     
                     it("should return the correct value from the DTO", closure: {
-                        expect(cacheObserver.events.first?.value.element).to(beNil())
+                        expect(cacheObserver.events.first!.value.element).to(beNil())
                     })
                 })
             })
