@@ -14,7 +14,7 @@ import RxTest
 
 class ExpireTests: QuickSpec {
     override func spec() {
-        describe("The expires operator") {
+        describe("Cache using expires operator") {
             var cache: CacheFake<Int, String>!
             var scheduler: TestScheduler!
             var cacheObserver: TestableObserver<String>!
