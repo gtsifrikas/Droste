@@ -117,15 +117,16 @@ class ExpireTests: QuickSpec {
                 }
                 
                 context("when calling set", {
+                    var dateSet: Date!
                     beforeEach {
+                        dateSet = Date()
                         _ = sut.set("Hello World", for: 1).subscribe()
                     }
                     
                     it("should create the correct CacheExpirableDTO", closure: {
                         let createdDTO = cache.didCalledGenericDataSetWithValue as? CacheExpirableDTO
                         expect(createdDTO?.value as? String).to(equal("Hello World"))
-                        expect(Int(createdDTO!.expiryDate.timeIntervalSinceNow))
-                            .to(equal(Int(Date(timeIntervalSinceNow: 10).timeIntervalSinceNow)))
+                        expect(Int(createdDTO!.expiryDate.timeIntervalSince(dateSet))).to(equal(10))
                     })
                 })
                 
