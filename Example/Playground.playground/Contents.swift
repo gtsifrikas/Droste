@@ -39,3 +39,8 @@ DrosteCaches
         let object = jsonObject
     })
 
+let date = Date()
+let date2 = date.addingTimeInterval(10)
+
+let diff = date2.timeIntervalSince1970 - date.timeIntervalSince1970
+
