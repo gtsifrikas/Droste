@@ -20,7 +20,7 @@ class CacheFake<K, V>: Cache, ExpirableCache {
     var numberOfTimesCalledGenericDataGet = 0//CacheDTO
     var didCallGenericDataGetWithKey: K?
     
-    func getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
+    func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
         numberOfTimesCalledGenericDataGet += 1
         genericDataRequest = PublishSubject()
         queueUsedForTheLastCall = currentQueueSpecific()
@@ -33,7 +33,7 @@ class CacheFake<K, V>: Cache, ExpirableCache {
     var didCalledGenericDataSetWithKey: K?
     var didCalledGenericDataSetWithValue: Any?
     
-    func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
+    func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         numberOfTimesCalledGenericDataSet += 1
         didCalledGenericDataSetWithKey = key
         didCalledGenericDataSetWithValue = value
