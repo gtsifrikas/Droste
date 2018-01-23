@@ -23,11 +23,11 @@ public class RamCache<K, V>: ExpirableCache where K: Hashable {
     //MARK: - Fetching
     private var storage: [K: Any] = [:]
     
-    public func getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
+    public func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
         return Observable.just(storage[key] as? GenericValueType)
     }
     
-    public func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
+    public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         return Observable.just((key, value))
             .flatMap { [weak self] (pair) -> Observable<Void> in
                 guard let strongSelf = self else {

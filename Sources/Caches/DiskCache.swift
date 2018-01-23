@@ -65,7 +65,7 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
         }
     }
     
-    public func getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
+    public func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
             if let obj = NSKeyedUnarchiver.unarchive(with: path) as? GenericValueType {
@@ -83,7 +83,7 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
             .observeOn(MainScheduler.instance)
     }
 
-    public func setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
+    public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
             let previousSize = self.sizeForFileAtPath(path)
