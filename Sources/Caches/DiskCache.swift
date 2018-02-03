@@ -17,7 +17,8 @@ public enum DrosteDiskError: Error {
     case diskSaveFailed
 }
 
-public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
+final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V: NSCoding {
+    
     public typealias Key = K
     public typealias Value = V
     
@@ -62,13 +63,12 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
             self?.calculateSize()
             self?.controlCapacity()
         }
-        
     }
     
-    public func get(_ key: K) -> Observable<V?> {
+    public func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
-            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? V {
+            if let obj = NSKeyedUnarchiver.unarchive(with: path) as? GenericValueType {
                 observer.onNext(obj)
                 observer.onCompleted()
                 _ = self.updateDiskAccessDateAtPath(path)
@@ -82,8 +82,8 @@ public class DiskCache<K, V>: Cache where K: StringConvertible, V: NSCoding {
             .subscribeOn(cacheScheduler)
             .observeOn(MainScheduler.instance)
     }
-    
-    public func set(_ value: V, for key: K) -> Observable<Void> {
+
+    public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         return Observable.create({ (observer) -> Disposable in
             let path = self.pathForKey(key)
             let previousSize = self.sizeForFileAtPath(path)

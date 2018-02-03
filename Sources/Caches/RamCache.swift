@@ -9,20 +9,25 @@
 import Foundation
 import RxSwift
 
-public class RamCache<K, V>: Cache where K: Hashable {
-    
+public class RamCache<K, V>: ExpirableCache where K: Hashable {
+
     public typealias Key = K
     public typealias Value = V
     
     public init() {}
     
-    private var storage: [K: V] = [:]
-    
-    public func get(_ key: K) -> Observable<V?> {
-        return Observable.just(storage[key])
+    public func clear() {
+        storage = [:]
     }
     
-    public func set(_ value: V, for key: K) -> Observable<Void> {
+    //MARK: - Fetching
+    private var storage: [K: Any] = [:]
+    
+    public func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
+        return Observable.just(storage[key] as? GenericValueType)
+    }
+    
+    public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
         return Observable.just((key, value))
             .flatMap { [weak self] (pair) -> Observable<Void> in
                 guard let strongSelf = self else {
@@ -31,9 +36,5 @@ public class RamCache<K, V>: Cache where K: Hashable {
                 strongSelf.storage[pair.0] = pair.1
                 return Observable.just(())
         }
-    }
-    
-    public func clear() {
-        storage = [:]
     }
 }

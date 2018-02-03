@@ -10,11 +10,37 @@ import Foundation
 import RxSwift
 import Droste
 
-class CacheFake<K, V>: Cache {
 
+class CacheFake<K, V>: Cache, ExpirableCache {
+    
     typealias Key = K
     typealias Value = V
 
+    var genericDataRequest: PublishSubject<Any?>!
+    var numberOfTimesCalledGenericDataGet = 0//CacheDTO
+    var didCallGenericDataGetWithKey: K?
+    
+    func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
+        numberOfTimesCalledGenericDataGet += 1
+        genericDataRequest = PublishSubject()
+        queueUsedForTheLastCall = currentQueueSpecific()
+        didCallGenericDataGetWithKey = key
+        return genericDataRequest.map({ $0 as? GenericValueType })
+    }
+
+    
+    var numberOfTimesCalledGenericDataSet = 0
+    var didCalledGenericDataSetWithKey: K?
+    var didCalledGenericDataSetWithValue: Any?
+    
+    func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
+        numberOfTimesCalledGenericDataSet += 1
+        didCalledGenericDataSetWithKey = key
+        didCalledGenericDataSetWithValue = value
+        queueUsedForTheLastCall = currentQueueSpecific()
+        return Observable.just(())
+    }
+    
     var queueUsedForTheLastCall: UnsafeMutableRawPointer!
 
     var request: PublishSubject<V?>!

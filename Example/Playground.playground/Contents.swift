@@ -22,7 +22,7 @@ _ = testCache.get(key).subscribe(onNext: { (value: String) in
 })
 
 DrosteCaches
-    .sharedImageCache
+    .imageCache(expires: .seconds(10))
     .get(URL(string: "https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")!)
     .observeOn(MainScheduler.instance)
     .subscribe(onNext: {(image) in
@@ -38,4 +38,9 @@ DrosteCaches
     .subscribe(onNext: { (jsonObject) in
         let object = jsonObject
     })
+
+let date = Date()
+let date2 = date.addingTimeInterval(10)
+
+let diff = date2.timeIntervalSince1970 - date.timeIntervalSince1970
 

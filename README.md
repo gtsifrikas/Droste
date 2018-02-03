@@ -75,6 +75,7 @@ jsonCache
 
 ## Features
 - [x] [Out of the box support for UIImage, JSON, NSData](#out-of-the-box)
+- [x] [Expirable caches](#expirable-caches)
 - [x] [Combine caches easily (e.g. ram + disk + network)](#compose-caches)
 - [x] [Because `.get` returns a `Cancelable` when you subscribe, you can cancel the request anytime](#cancel-requests)
 - [x] [Combine different type of caches by mapping the value of caches using `.mapValues` and the key using `.mapKeys`](#map-values-and-keys)
@@ -106,6 +107,25 @@ let ramDiskCache = ramCache.compose(other: diskCache)
 
 //Same composition example using the the overloaded `+` operator
 let ramDiskCache = ramCache + diskCache
+```
+
+### Expirable caches
+You can set expiry in each cache that supports it. DiskCache and RamCache both have out of the box support!
+You can set an expiry in the following ways
+```swift
+// seconds from now
+let ramCache = RamCache<URL, NSData>().expires(at: .seconds(30))
+
+// or by explicitly setting a date 
+let diskCache = DiskCache<URL, NSData>().expires(at: .date(Date(timeIntervalSince1970: 1516045540)))
+```
+
+Refreshing a resource after 5 minutes in both ram and disk cache.
+```swift
+let ramCache = RamCache<URL, NSData>().expires(at: .seconds(600))
+let diskCache = DiskCache<URL, NSData>().expires(at: .seconds(600))
+
+let dataCache = ramCache + diskCache + networkFetcher
 ```
 
 ### Cancel Requests
@@ -323,7 +343,7 @@ github "gtsifrikas/Droste" ~> 0.1.1
 - [ ] Support macOS
 - [ ] Support linux
 - [ ] Update README to include custom Cache creation.
-- [ ] Come up with a api for TTL and support it in DiskCache and RamCache.
+- [x] Come up with a api for TTL and support it in DiskCache and RamCache.
 
 ## Author
 
