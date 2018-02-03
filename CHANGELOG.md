@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to Droste will be documented in this file.
 
+### [0.2.0](https://github.com/gtsifrikas/Droste/releases/tag/0.2.0)
+<!-- Released on 2017-2-03. -->
+
+* Support expiry on caches.
+
 ### [0.1.1](https://github.com/gtsifrikas/Droste/releases/tag/0.1.1)
 <!-- Released on 2017-12-03. -->
 
