@@ -325,7 +325,7 @@ You can also experiment and learn the using the *Droste Playground*, contained i
 To install Droste, simply add the following line to your Podfile:
 
 ```ruby
-pod 'Droste', '~> 0.1.1'
+pod 'Droste', '~> 0.2.0'
 ```
 
 ### Carthage
@@ -335,7 +335,7 @@ pod 'Droste', '~> 0.1.1'
 To install Droste, simply add the following line to your Cartfile:
 
 ```ogdl
-github "gtsifrikas/Droste" ~> 0.1.1
+github "gtsifrikas/Droste" ~> 0.2.0
 ```
 
 ## Tasks for version 1.0
