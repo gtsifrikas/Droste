@@ -1,15 +1,15 @@
 PODS:
-  - Droste (0.1.1):
+  - Droste (0.2.0):
     - RxSwift
-  - Droste/Tests (0.1.1):
+  - Droste/Tests (0.2.0):
     - Nimble
     - Quick
     - RxSwift
     - RxTest
-  - Nimble (7.0.3)
-  - Quick (1.2.0)
-  - RxSwift (4.0.0)
-  - RxTest (4.0.0):
+  - Nimble (7.1.1)
+  - Quick (1.3.0)
+  - RxSwift (4.1.2)
+  - RxTest (4.1.2):
     - RxSwift (~> 4.0)
 
 DEPENDENCIES:
@@ -21,12 +21,12 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  Droste: 03a81fe20f2e5c323f2288c577e0c844803e1998
-  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
-  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
-  RxSwift: fd680d75283beb5e2559486f3c0ff852f0d35334
-  RxTest: 0041e792cede35e53e4749f378d21482af0e9d12
+  Droste: 19184d22a8c964c433edbe2c867bd022ead06220
+  Nimble: 391f07782af4b37914f9bd7b2ffbb952731b8202
+  Quick: 03278013f71aa05fe9ecabc94fbcc6835f1ee76f
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
+  RxTest: e634f15fd2c2cd0e0120132ef7a4f7be69ad0393
 
 PODFILE CHECKSUM: 1dd77495fd01801853c9db2b429b338e50b28025
 
-COCOAPODS: 1.4.0.beta.2
+COCOAPODS: 1.4.0
