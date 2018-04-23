@@ -157,6 +157,10 @@ class CompositionTests: QuickSpec {
                     it("should not have been disposed") {
                         expect(subscriptionDisposable.isDisposed).to(beFalse())
                     }
+                    
+                    it("should set the result to the rhs cache") {
+                        expect(cache1.didCalledSetWithValue).to(equal(cache2ResponseValue))
+                    }
                 }
 
                 context("when the second request fails without error") {
