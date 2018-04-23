@@ -12,16 +12,16 @@ import RxTest
 
 class RetainTests: QuickSpec {
     override func spec() {
-        weak var cache1: CacheFake<String, Int>!
-        weak var cache2: CacheFake<String, Int>!
+        weak var cache1: AsyncCacheFake<String, Int>!
+        weak var cache2: AsyncCacheFake<String, Int>!
         var composedCache: CompositeCache<String, Int>!
 
         var scheduler: TestScheduler!
         var composedCacheObserver: TestableObserver<Int?>!
 
         beforeEach {
-            let cache1Local = CacheFake<String, Int>()
-            let cache2Local = CacheFake<String, Int>()
+            let cache1Local = AsyncCacheFake<String, Int>()
+            let cache2Local = AsyncCacheFake<String, Int>()
             cache1 = cache1Local
             cache2 = cache2Local
             composedCache = cache1Local + cache2Local
@@ -61,7 +61,7 @@ class RetainTests: QuickSpec {
             }
 
             context("when retaining the composed cache variable") {
-                it("should release the individual caches which composite cache consists of") {
+                it("should NOT release the individual caches which composite cache consists of") {
                     expect(cache1).toNot(beNil())
                     expect(cache2).toNot(beNil())
                 }
@@ -98,14 +98,13 @@ class RetainTests: QuickSpec {
                 }
 
                 it("should pass the right value") {
-                    let nextValueEvent = composedCacheObserver.events.first!
-                    expect(nextValueEvent.value.element!).to(equal(cache1ResponseValue))
+                    expect(composedCacheObserver.events.first?.value.element!).toEventually(equal(cache1ResponseValue))
                 }
 
                 it("should not emit stop events") {
                     expect(composedCacheObserver.events).toEventually(haveCount(1))
-                    let cacheEvent = composedCacheObserver.events.first!
-                    expect(cacheEvent.value.isStopEvent).to(beFalse())
+                    let cacheEvent = composedCacheObserver.events.first
+                    expect(cacheEvent?.value.isStopEvent).to(beFalse())
                 }
 
                 it("should not have been disposed") {
@@ -117,7 +116,7 @@ class RetainTests: QuickSpec {
                 }
 
                 context("when retaining the composed cache variable") {
-                    it("should release the individual caches which composite cache consists of") {
+                    it("should NOT release the individual caches which composite cache consists of") {
                         expect(cache1).toNot(beNil())
                         expect(cache2).toNot(beNil())
                     }
@@ -159,7 +158,7 @@ class RetainTests: QuickSpec {
                 }
 
                 context("while retaining the composed cache variable") {
-                    it("should release the individual caches which composite cache consists of") {
+                    it("should NOT release the individual caches which composite cache consists of") {
                         expect(cache1).toNot(beNil())
                         expect(cache2).toNot(beNil())
                     }
@@ -200,7 +199,7 @@ class RetainTests: QuickSpec {
                 }
 
                 it("should call get on the second cache") {
-                    expect(cache2.numberOfTimesCalledGet).to(equal(1))
+                    expect(cache2.numberOfTimesCalledGet).toEventually(equal(1))
                 }
 
                 it("should not do other get on the first cache") {
@@ -208,7 +207,7 @@ class RetainTests: QuickSpec {
                 }
 
                 context("when retaining the composed cache variable") {
-                    it("should release the individual caches which composite cache consists of") {
+                    it("should NOT release the individual caches which composite cache consists of") {
                         expect(cache1).toNot(beNil())
                         expect(cache2).toNot(beNil())
                     }
@@ -235,9 +234,18 @@ class RetainTests: QuickSpec {
                 context("when the second request succeeds") {
                     beforeEach {
                         scheduler.scheduleAt(150) {
-                            cache2.request.on(.next(cache2ResponseValue))
+                            Droste_Unit_Tests.wait(timeout: 2, pollInterval: 0.1, until: { () -> Bool in
+                                cache2.request != nil
+                            }, then: {
+                                composedCache = nil // This is done to implicitely test instance retaining while a request to the second cache is pending
+                                cache2.request.on(.next(cache2ResponseValue))
+                            })
                         }
                         scheduler.start()
+                    }
+                    
+                    it("should call set in the lhs cache") {
+                        expect(cache1.didCalledSetWithValue).toEventually(equal(cache2ResponseValue))
                     }
 
                     it("should emit the next value") {
@@ -245,14 +253,12 @@ class RetainTests: QuickSpec {
                     }
 
                     it("should pass the right value") {
-                        let nextValueEvent = composedCacheObserver.events.first!
-                        expect(nextValueEvent.value.element ?? -1).to(equal(cache2ResponseValue))
+                        expect(composedCacheObserver.events.first?.value.element ?? -1).toEventually(equal(cache2ResponseValue))
                     }
 
                     it("should not emit stop events") {
                         expect(composedCacheObserver.events).toEventually(haveCount(1))
-                        let cacheEvent = composedCacheObserver.events.first!
-                        expect(cacheEvent.value.isStopEvent).to(beFalse())
+                        expect(composedCacheObserver.events.first?.value.isStopEvent).to(beFalse())
                     }
 
                     it("should not have been disposed") {
@@ -260,7 +266,7 @@ class RetainTests: QuickSpec {
                     }
 
                     context("when retaining the composed cache variable") {
-                        it("should release the individual caches which composite cache consists of") {
+                        it("should NOT release the individual caches which composite cache consists of") {
                             expect(cache1).toNot(beNil())
                             expect(cache2).toNot(beNil())
                         }
@@ -288,7 +294,12 @@ class RetainTests: QuickSpec {
                 context("when the second request fails without error") {
                     beforeEach {
                         scheduler.scheduleAt(150) {
-                            cache2.request.on(.next(nil))
+                            Droste_Unit_Tests.wait(timeout: 2, pollInterval: 0.1, until: { () -> Bool in
+                                cache2.request != nil
+                            }, then: {
+                                composedCache = nil // This is done to implicitely test instance retaining while a request to the second cache is pending
+                                cache2.request.on(.next(nil))
+                            })
                         }
                         scheduler.start()
                     }
@@ -310,12 +321,12 @@ class RetainTests: QuickSpec {
                     }
 
                     it("should pass nil") {
-                        let nextValueEvent = composedCacheObserver.events.first!
-                        expect(nextValueEvent.value.element!).to(beNil())//the element is of type Optional<Optional<Int>> that's why the force unwrapping
+                        let nextValueEvent = composedCacheObserver.events.first
+                        expect(nextValueEvent?.value.element!).to(beNil())//the element is of type Optional<Optional<Int>> that's why the force unwrapping
                     }
 
                     context("when retaining the composed cache variable") {
-                        it("should release the individual caches which composite cache consists of") {
+                        it("should NOT release the individual caches which composite cache consists of") {
                             expect(cache1).toNot(beNil())
                             expect(cache2).toNot(beNil())
                         }
@@ -339,6 +350,29 @@ class RetainTests: QuickSpec {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+func wait(timeout: TimeInterval = 2.0, pollInterval: TimeInterval = 1.0, file: FileString = #file, line: UInt = #line, until: @escaping () -> Bool, then: @escaping () -> Void) {
+    let startedAt = Date()
+    let backgroundQueue = DispatchQueue(label: "com.app.queue",
+                                        qos: .userInitiated,
+                                        target: nil)
+    
+    waitUntil(timeout: timeout, file: file, line: line) { done in
+        backgroundQueue.async {
+            while !until() {
+                Thread.sleep(forTimeInterval: pollInterval)
+                if abs(startedAt.timeIntervalSinceNow) > timeout {
+                    done()
+                    return
+                }
+            }
+            DispatchQueue.main.async {
+                then()
+                done()
             }
         }
     }

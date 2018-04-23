@@ -22,7 +22,9 @@ extension Cache {
                             }
                             return other.get(key).flatMap({ (valueFromOther) -> Observable<Value?> in// the lhs didn't have the resource so ask the rhs
                                 if let valueFromOther = valueFromOther {
-                                    _ = self.set(valueFromOther, for: key).take(1).publish().connect()// set the value to the lhs cache so the next time to have the resource, using take(1) becacuse we want the disposable to be disposed after 1 emition, we do not chain it to the rest "get" observable to ensure that the cache will return the value as fast possible
+                                    _ = self.set(valueFromOther, for: key).take(1).subscribe()
+                                    // set the value to the lhs cache so the next time to have the resource, using take(1) becacuse we want the disposable to be disposed after 1 emition, we do not chain it to the rest "get" observable to ensure that the cache will return the value as fast possible
+//                                    return self.set(valueFromOther, for: key).map({ _ in valueFromOther })
                                 }
                                 return Observable.just(valueFromOther)
                             })
