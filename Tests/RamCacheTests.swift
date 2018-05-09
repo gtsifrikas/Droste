@@ -52,7 +52,20 @@ class RamCacheTests: QuickSpec {
                     }
                     
                     it("should return the value") {
-                        expect(cacheObserver.events.first?.value.element!).to(equal(1))
+                        expect(cacheObserver.events.first?.value.element).to(equal(1))
+                    }
+                }
+                
+                context("when cache does have a value but we query with different key than the saved one") {
+                    beforeEach {
+                        scheduler.scheduleAt(0) {
+                            _ = sut.set(1, for: "random").publish().connect()
+                        }
+                        scheduler.start()
+                    }
+                    
+                    it("should NOT return a value") {
+                        expect(cacheObserver.events.first?.value.element!).to(beNil())
                     }
                 }
                 
