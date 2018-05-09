@@ -80,7 +80,6 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
             return Disposables.create()
         })
             .subscribeOn(cacheScheduler)
-            .observeOn(MainScheduler.instance)
     }
 
     public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
@@ -107,7 +106,6 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
             return Disposables.create()
         })
             .subscribeOn(cacheScheduler)
-            .observeOn(MainScheduler.instance)
     }
     
     public func clear() {
