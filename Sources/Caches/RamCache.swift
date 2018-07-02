@@ -14,27 +14,55 @@ public class RamCache<K, V>: ExpirableCache where K: Hashable {
     public typealias Key = K
     public typealias Value = V
     
-    public init() {}
+    private let cacheScheduler: SerialDispatchQueueScheduler
+    private let cacheQueue: DispatchQueue
+    private var storage: [K: Any]
+    public init() {
+        var generatedQueue: DispatchQueue?
+        cacheScheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "com.droste.ram", serialQueueConfiguration: { (queue) in
+            generatedQueue = queue// we are using the configuration block of SerialDispatchQueueScheduler to get the internal queue ref, doing so it ensures the timing of the disk operations are executed as intended
+        })
+        
+        if let generatedQueue = generatedQueue {
+            cacheQueue = generatedQueue
+        } else {
+            //fallback if for some reason we don't have a reference on the internal queue
+            cacheQueue = DispatchQueue(label: "com.droste.ram", qos: .userInitiated)
+        }
+        storage = [:]
+        cacheQueue.async { [weak self] in
+            self?.storage = [:]
+        }
+    }
     
     public func clear() {
-        storage = [:]
+        cacheQueue.async {[weak self] in
+            self?.storage = [:]
+        }
     }
     
     //MARK: - Fetching
-    private var storage: [K: Any] = [:]
-    
     public func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
-        return Observable.just(storage[key] as? GenericValueType)
+        return Observable.create({ [weak self] (observer) -> Disposable in
+            if let obj = self?.storage[key] as? GenericValueType {
+                observer.onNext(obj)
+                observer.onCompleted()
+            } else {
+                observer.onNext(nil)
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        })
+        .subscribeOn(cacheScheduler)
     }
     
     public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
-        return Observable.just((key, value))
-            .flatMap { [weak self] (pair) -> Observable<Void> in
-                guard let strongSelf = self else {
-                    return Observable.just(())
-                }
-                strongSelf.storage[pair.0] = pair.1
-                return Observable.just(())
-        }
+        return Observable.create({ [weak self] (observer) -> Disposable in
+            self?.storage[key] = value
+            observer.on(.next(()))
+            observer.onCompleted()
+            return Disposables.create()
+        })
+        .subscribeOn(cacheScheduler)
     }
 }

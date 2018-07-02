@@ -26,6 +26,25 @@ class RamCacheTests: QuickSpec {
             
             let key = "testKey"
             
+            
+            describe("on different threads", {
+                let queueScheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "test_async_queue")
+                context("when getting a value from different queue", {
+                    beforeEach {
+                        scheduler.scheduleAt(0) {
+                            _ = sut.set(1, for: key).publish().connect()
+                            _ = sut.get(key).subscribeOn(queueScheduler).subscribe(cacheObserver)
+                        }
+                        scheduler.start()
+                    }
+                    
+                    it("should return the value") {
+                        expect(cacheObserver.events.first?.value.element).toEventually(equal(1))
+                        expect(cacheObserver.events).toEventually(haveCount(2))
+                    }
+                })
+            })
+            
             context("when calling get") {
                 beforeEach {
                     scheduler.scheduleAt(10) {
@@ -52,8 +71,8 @@ class RamCacheTests: QuickSpec {
                     }
                     
                     it("should return the value") {
-                        expect(cacheObserver.events.first?.value.element).to(equal(1))
-                        expect(cacheObserver.events).to(haveCount(2))
+                        expect(cacheObserver.events.first?.value.element).toEventually(equal(1))
+                        expect(cacheObserver.events).toEventually(haveCount(2))
                     }
                     
                     context("when using a different key", {
@@ -65,8 +84,8 @@ class RamCacheTests: QuickSpec {
                         }
                         
                         it("should return nil") {
-                            expect(cacheObserver.events).to(haveCount(4))
-                            expect(cacheObserver.events[2].value.element!).to(beNil())
+                            expect(cacheObserver.events).toEventually(haveCount(4))
+                            expect(cacheObserver.events[2].value.element!).toEventually(beNil())
                         }
                     })
                 }
