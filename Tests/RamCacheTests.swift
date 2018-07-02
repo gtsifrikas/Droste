@@ -53,7 +53,22 @@ class RamCacheTests: QuickSpec {
                     
                     it("should return the value") {
                         expect(cacheObserver.events.first?.value.element).to(equal(1))
+                        expect(cacheObserver.events).to(haveCount(2))
                     }
+                    
+                    context("when using a different key", {
+                        beforeEach {
+                            scheduler.scheduleAt(15) {
+                                _ = sut.get("a random key").subscribe(cacheObserver)
+                            }
+                            scheduler.start()
+                        }
+                        
+                        it("should return nil") {
+                            expect(cacheObserver.events).to(haveCount(4))
+                            expect(cacheObserver.events[2].value.element!).to(beNil())
+                        }
+                    })
                 }
                 
                 context("when cache does have a value but we query with different key than the saved one") {

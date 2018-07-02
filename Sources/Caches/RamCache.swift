@@ -21,10 +21,10 @@ public class RamCache<K, V>: ExpirableCache where K: Hashable {
     }
     
     //MARK: - Fetching
-    private var storage: [Int: Any] = [:]
+    private var storage: [K: Any] = [:]
     
     public func _getData<GenericValueType>(_ key: K) -> Observable<GenericValueType?> {
-        return Observable.just(storage[key.hashValue] as? GenericValueType)
+        return Observable.just(storage[key] as? GenericValueType)
     }
     
     public func _setData<GenericValueType>(_ value: GenericValueType, for key: K) -> Observable<Void> {
@@ -33,7 +33,7 @@ public class RamCache<K, V>: ExpirableCache where K: Hashable {
                 guard let strongSelf = self else {
                     return Observable.just(())
                 }
-                strongSelf.storage[pair.0.hashValue] = pair.1
+                strongSelf.storage[pair.0] = pair.1
                 return Observable.just(())
         }
     }
