@@ -246,6 +246,23 @@ class ReuseInFlightTests: QuickSpec {
                     it("should not call get on the second cache") {
                         expect(cache2.numberOfTimesCalledGet).to(equal(0))
                     }
+                    
+                    context("when making the same call again") {
+                        beforeEach {
+                            scheduler.scheduleAt(250) {
+                                subscription2Disposable = composedCache.get(key).subscribe(composedCacheObserver2) as? Cancelable
+                            }
+                            scheduler.start()
+                        }
+                        
+                        it("should make a new request from the cache") {
+                            expect(cache1.numberOfTimesCalledGet).toEventually(equal(2))
+                        }
+                        
+                        it("should use the correct key") {
+                            expect(cache1.didCallGetWithKey) == key
+                        }
+                    }
                 }
             }
         }
