@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Droste"
-  s.version          = "0.2.2"
+  s.version          = "0.2.3"
   s.summary          = "Droste is a lightweight composable caching library which leverages RxSwift's Observable for its API."
   s.homepage         = "https://github.com/gtsifrikas/Droste"
   s.license          = { type: 'MIT', file: 'LICENSE' }
@@ -11,16 +11,16 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Sources/**/*.{swift,h,m}'
   s.module_name = 'Droste'
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
+  s.swift_version = '5.0'
   s.ios.deployment_target = '9.0'
 
   s.dependency 'RxSwift'
 
   s.test_spec 'Tests' do |t|
-    t.source_files = 'Tests/*.swift', 'Sources/Extensions.swift'
-    t.dependency 'RxSwift'
+    t.dependency 'RxTest'
     t.dependency 'Nimble'
     t.dependency 'Quick'
-    t.dependency 'RxTest'
+    
+    t.source_files = 'Tests/*.swift', 'Sources/Extensions.swift'
   end
 end

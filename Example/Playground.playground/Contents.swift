@@ -23,7 +23,7 @@ _ = testCache.get(key).subscribe(onNext: { (value: String) in
 
 DrosteCaches
     .imageCache(expires: .seconds(10))
-    .get(URL(string: "https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")!)
+    .get(URL(string: "https://cdn.mos.cms.futurecdn.net/QaLNmZ8hSnJ8zUgGdPifTj.jpg")!)
     .observeOn(MainScheduler.instance)
     .subscribe(onNext: {(image) in
         let exampleImage = image

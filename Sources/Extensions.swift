@@ -59,8 +59,8 @@ private func arrayOfBytes<T>(_ value: T, length: Int? = nil) -> [UInt8] {
         return bytes
     }
     
-    valuePointer.deinitialize()
-    valuePointer.deallocate(capacity: 1)
+    valuePointer.deinitialize(count: totalBytes)
+    valuePointer.deallocate()
     
     return bytes
 }

@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         }
         
         imageCache
-            .get(URL(string: "https://dars.io/wp-content/uploads/2015/06/1435934506-50d83ee90498b3e4f9578a58ff8b5880.png")!)
+            .get(URL(string: "https://cdn.mos.cms.futurecdn.net/QaLNmZ8hSnJ8zUgGdPifTj.jpg")!)
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: {[weak self] (image) in
                 self?.imageView.image = image
