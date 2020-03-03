@@ -1,7 +1,7 @@
-language: objective-c
-osx_image: xcode9.3
+language: swift
+osx_image: xcode11.3.1
 env:
-- DESTINATION="OS=11.1,name=iPhone 7" SCHEME="Example" SDK=iphonesimulator
+- DESTINATION="OS=13.3,name=iPhone 11" SCHEME="Example" SDK=iphonesimulator
 podfile: Example/Podfile
 
 before_install: 
@@ -9,4 +9,4 @@ before_install:
 - gem install cocoapods
 
 script:
-- pod lib lint --allow-warnings --verbose
+- pod lib lint --allow-warnings --verbose --swift-version=5.0
