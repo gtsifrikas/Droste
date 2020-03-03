@@ -42,10 +42,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4A5EA46C39ADDAAF0FEB98083B283CE1"
+               BlueprintIdentifier = "FD9AE694C065D335A036827FC7EF8E0D"
                BuildableName = "Droste-Unit-Tests.xctest"
                BlueprintName = "Droste-Unit-Tests"
-               ReferencedContainer = "container:Pods/Droste.xcodeproj">
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
