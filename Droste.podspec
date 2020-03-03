@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.social_media_url = 'https://twitter.com/gtsifrikas'
   s.platform = :ios
   s.requires_arc = true
-  s.source_files = 'Sources/**/*.{swift,h,m}'
+  s.source_files = 'Sources/**/*.{swift,h,m}', 'Sources/ProtectedResource.swift'
   s.module_name = 'Droste'
   s.swift_version = '5.0'
   s.ios.deployment_target = '9.0'
