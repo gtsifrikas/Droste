@@ -50,7 +50,7 @@ public struct DrosteCaches {
                 f: { (data) -> UIImage in
                     return UIImage(data: data as Data)!
             }) { (image) -> NSData in
-                return image.pngData() as! NSData
+                return image.pngData()! as NSData
             }
     }
 }

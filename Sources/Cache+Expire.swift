@@ -19,18 +19,18 @@ public protocol ExpirableCache: Cache {
 }
 
 public extension ExpirableCache {
-    public func get(_ key: Key) -> Observable<Value?> {
+    func get(_ key: Key) -> Observable<Value?> {
         return _getData(key)
     }
 
-    public func set(_ value: Value, for key: Key) -> Observable<Void> {
+    func set(_ value: Value, for key: Key) -> Observable<Void> {
         return _setData(value, for: key)
     }
 }
 
 public extension ExpirableCache {
     
-    public func expires(at expiry: Expiry) -> CompositeCache<Key, Value> {
+    func expires(at expiry: Expiry) -> CompositeCache<Key, Value> {
         return
             CompositeCache(
                 get: {(key: Key) -> Observable<Value?> in

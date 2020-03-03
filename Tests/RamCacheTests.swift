@@ -17,7 +17,7 @@ class RamCacheTests: QuickSpec {
         describe("The Ram Cache") {
             var sut: RamCache<String, Int>!
             var cacheObserver: TestableObserver<Int?>!
-            var scheduler = TestScheduler(initialClock: 0)
+            let scheduler = TestScheduler(initialClock: 0)
             
             beforeEach {
                 cacheObserver  = scheduler.createObserver(Int?.self)

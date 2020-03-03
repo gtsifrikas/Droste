@@ -44,19 +44,19 @@ class ReuseInFlightTests: QuickSpec {
             beforeEach {
                 scheduler.scheduleAt(100) {
                     subscriptionDisposable = composedCache.get(key)
-                        .subscribe(composedCacheObserver) as! Cancelable
+                        .subscribe(composedCacheObserver) as? Cancelable
                     
                     let q1 = DispatchQueue(label: "queue1")
                     let q2 = DispatchQueue(label: "queue2")
                     
                     q1.async {
                         subscriptionDisposable2 = composedCache
-                            .get(key).subscribe(composedCacheObserver2) as! Cancelable
+                            .get(key).subscribe(composedCacheObserver2) as? Cancelable
                     }
                     
                     q2.async {
                         subscriptionDisposable3 = composedCache
-                            .get(key).subscribe(composedCacheObserver3) as! Cancelable
+                            .get(key).subscribe(composedCacheObserver3) as? Cancelable
                     }
                 }
                 scheduler.start()
@@ -151,7 +151,7 @@ class ReuseInFlightTests: QuickSpec {
             
             beforeEach {
                 scheduler.scheduleAt(100) {
-                    subscriptionDisposable = composedCache.get(key).subscribe(composedCacheObserver) as! Cancelable
+                    subscriptionDisposable = composedCache.get(key).subscribe(composedCacheObserver) as? Cancelable
                 }
                 scheduler.start()
             }
@@ -177,7 +177,7 @@ class ReuseInFlightTests: QuickSpec {
                 
                 beforeEach {
                     scheduler.scheduleAt(150) {
-                        subscription2Disposable = composedCache.get(key).subscribe(composedCacheObserver2) as! Cancelable
+                        subscription2Disposable = composedCache.get(key).subscribe(composedCacheObserver2) as? Cancelable
                     }
                     scheduler.start()
                 }

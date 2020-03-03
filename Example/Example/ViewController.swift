@@ -33,7 +33,7 @@ class ViewController: UIViewController {
                 f: { (data) -> UIImage in
                     return UIImage(data: data as Data)!
             }) { (image) -> NSData in
-                return (UIImagePNGRepresentation(image) as NSData?)!
+                return (image.pngData() as NSData?)!
         }
         
         imageCache

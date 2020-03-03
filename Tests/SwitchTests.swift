@@ -24,7 +24,7 @@ class SwitchTests: QuickSpec {
             
             var choosenCache: CacheSwitchResult!
             
-            var key = "testKey"
+            let key = "testKey"
             beforeEach {
                 scheduler = TestScheduler(initialClock: 0)
                 
@@ -88,7 +88,7 @@ class SwitchTests: QuickSpec {
             context("when calling set") {
                 beforeEach {
                     scheduler.scheduleAt(10) {
-                        finalCache.set(1, for: key).publish().connect()
+                        _ = finalCache.set(1, for: key).publish().connect()
                     }
                 }
                 context("when choosing first cache") {

@@ -30,12 +30,7 @@ class MapTests: QuickSpec {
             }
             
             var scheduler: TestScheduler!
-            
-            var cacheObserver: TestableObserver<Int?>!
             var mappedCacheObserver: TestableObserver<Int?>!
-            
-            let key = "testKey"
-            let setKey = "setTestKey"
             
             beforeEach {
                 scheduler = TestScheduler(initialClock: 0)
@@ -47,7 +42,7 @@ class MapTests: QuickSpec {
             
             context("when calling get") {
                 beforeEach {
-                    mappedCache.get("1").publish().connect()
+                    _ = mappedCache.get("1").publish().connect()
                 }
                 
                 it("should correct map the key") {
@@ -70,7 +65,7 @@ class MapTests: QuickSpec {
             
             context("when calling set") {
                 beforeEach {
-                    mappedCache.set(1, for: "1").publish().connect()
+                    _ = mappedCache.set(1, for: "1").publish().connect()
                 }
                 
                 it("should correct map the key") {
@@ -117,8 +112,6 @@ class MapTests: QuickSpec {
             }
             
             var scheduler: TestScheduler!
-            
-            var cacheObserver: TestableObserver<Int?>!
             var mappedCacheObserver: TestableObserver<String?>!
             
             let key = "testKey"
@@ -129,11 +122,10 @@ class MapTests: QuickSpec {
                 cache = CacheFake()
                 mappedCache = cache
                     .mapValues(f: valueMapper, fInv: inverseValueMapper)
-                cacheObserver = scheduler.createObserver(Int?.self)
                 mappedCacheObserver = scheduler.createObserver(String?.self)
                 
                 scheduler.scheduleAt(0) {
-                    mappedCache.get(key).subscribe(mappedCacheObserver)
+                    _ = mappedCache.get(key).subscribe(mappedCacheObserver)
                     _ = mappedCache.set("1", for: setKey).publish().connect()
                 }
             }
@@ -186,11 +178,10 @@ class MapTests: QuickSpec {
                     beforeEach {
                         mappedCache = cache
                             .mapValues(f: faultyValueMapper, fInv: inverseValueMapper)
-                        cacheObserver = scheduler.createObserver(Int?.self)
                         mappedCacheObserver = scheduler.createObserver(String?.self)
                         
                         scheduler.scheduleAt(10) {
-                            mappedCache.get(key).subscribe(mappedCacheObserver)
+                            _ = mappedCache.get(key).subscribe(mappedCacheObserver)
                         }
                         
                         scheduler.scheduleAt(20) {
@@ -206,16 +197,14 @@ class MapTests: QuickSpec {
                 }
                 
                 context("when the underlying cache fails") {
-                    let actualCacheResponse = 1
                     
                     beforeEach {
                         mappedCache = cache
                             .mapValues(f: valueMapper, fInv: inverseValueMapper)
-                        cacheObserver = scheduler.createObserver(Int?.self)
                         mappedCacheObserver = scheduler.createObserver(String?.self)
                         
                         scheduler.scheduleAt(10) {
-                            mappedCache.get(key).subscribe(mappedCacheObserver)
+                            _ = mappedCache.get(key).subscribe(mappedCacheObserver)
                         }
                         
                         scheduler.scheduleAt(20) {
@@ -250,7 +239,7 @@ class MapTests: QuickSpec {
                     
                     beforeEach {
                         scheduler.scheduleAt(10) {
-                            mappedCache.set(actualSetRequest, for: setKey)
+                            _ = mappedCache.set(actualSetRequest, for: setKey)
                         }
                         scheduler.start()
                     }
@@ -268,11 +257,10 @@ class MapTests: QuickSpec {
                         setObserver = scheduler.createObserver(Void.self)
                         mappedCache = cache
                             .mapValues(f: faultyValueMapper, fInv: inverseValueMapper)
-                        cacheObserver = scheduler.createObserver(Int?.self)
                         mappedCacheObserver = scheduler.createObserver(String?.self)
                         
                         scheduler.scheduleAt(10) {
-                            mappedCache.set(actualCacheSetRequest, for: setKey).subscribe(setObserver)
+                            _ = mappedCache.set(actualCacheSetRequest, for: setKey).subscribe(setObserver)
                         }
                         
                         scheduler.start()
@@ -284,16 +272,14 @@ class MapTests: QuickSpec {
                 }
                 
                 context("when the underlying cache fails") {
-                    let actualCacheResponse = 1
                     
                     beforeEach {
                         mappedCache = cache
                             .mapValues(f: valueMapper, fInv: inverseValueMapper)
-                        cacheObserver = scheduler.createObserver(Int?.self)
                         mappedCacheObserver = scheduler.createObserver(String?.self)
                         
                         scheduler.scheduleAt(10) {
-                            mappedCache.get(key).subscribe(mappedCacheObserver)
+                            _ = mappedCache.get(key).subscribe(mappedCacheObserver)
                         }
                         
                         scheduler.scheduleAt(20) {

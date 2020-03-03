@@ -39,7 +39,7 @@ class RetainTests: QuickSpec {
 
             beforeEach {
                 scheduler.scheduleAt(100) {
-                    subscriptionDisposable = composedCache.get(key).subscribe(composedCacheObserver) as! Cancelable
+                    subscriptionDisposable = composedCache.get(key).subscribe(composedCacheObserver) as? Cancelable
                 }
                 scheduler.start()
             }

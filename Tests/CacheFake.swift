@@ -17,8 +17,8 @@ class AsyncCacheFake<K, V>: Cache, ExpirableCache {
     typealias Key = K
     typealias Value = V
     
-    var delayGetSeconds: TimeInterval = 0.1
-    var delaySetSeconds: TimeInterval = 0.1
+    var delayGetSeconds: DispatchTimeInterval = .milliseconds(100)
+    var delaySetSeconds: DispatchTimeInterval = .milliseconds(100)
     
     
     private var requestSubjectProxyDisposeBag = DisposeBag()
@@ -68,7 +68,7 @@ class AsyncCacheFake<K, V>: Cache, ExpirableCache {
             .delay(delaySetSeconds, scheduler: SerialDispatchQueueScheduler(qos: .userInitiated))
             .flatMap { (_) -> Observable<Void> in
                 self.didCalledSetWithKey = key
-                self.didCalledSetWithValue = value as! V
+                self.didCalledSetWithValue = value as? V
                 return .just(())
             }
             .map({

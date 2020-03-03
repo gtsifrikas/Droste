@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 
 public extension Cache {
-    public func forwardRequest() -> CompositeCache<Key, Value> {
+    func forwardRequest() -> CompositeCache<Key, Value> {
         return CompositeCache(
             get: { key in
                 return self.get(key).startWith(nil)
