@@ -102,17 +102,17 @@ class ReuseInFlightTests: QuickSpec {
                         return composedCacheObserver.events.first
                     }
                     
-                    expect(nextValueEvent()?.value.element!).toEventually(equal(cache1ResponseValue))
+                    expect(nextValueEvent()?.value.element).toEventually(equal(cache1ResponseValue))
                     
                     let nextValueEvent2 = {
                         return composedCacheObserver2.events.first
                     }
-                    expect(nextValueEvent2()?.value.element!).toEventually(equal(cache1ResponseValue))
+                    expect(nextValueEvent2()?.value.element).toEventually(equal(cache1ResponseValue))
                     
                     let nextValueEvent3 = {
                         return composedCacheObserver3.events.first
                     }
-                    expect(nextValueEvent3()?.value.element!).toEventually(equal(cache1ResponseValue))
+                    expect(nextValueEvent3()?.value.element).toEventually(equal(cache1ResponseValue))
                 }
                 
                 it("should not emit stop events in none observers") {

@@ -10,27 +10,59 @@ import Foundation
 import RxSwift
 
 extension Cache where Key: Hashable {
+    
     //if u have a slow cache and requesting for a resource is expensive you can use this method to concentrate all requests that are under the same key on a single shared subscription
     public func reuseInFlight() -> CompositeCache<Key, Value> {
-        let dict = ConcurrentDictionary<Key, Observable<Value?>>()
+        let tsDictionary = Protected(resource: [Key: Observable<Value?>]())
         
         return CompositeCache(
             get: { (key) in
-                return (dict[key] ?? ({
-                    let newObservable: Observable<Value?> = self.get(key)
-                        .do(onNext: { (_) in
-                            dict[key] = nil
-                        }, onError: { (_) in
-                            dict[key] = nil
-                        }, onCompleted: {
-                            dict[key] = nil
-                        }, onDispose: {
-                            dict[key] = nil
-                        })
-                        .share()//all the interested parties for this particular resource will share a single subscription
-                    dict[key] = newObservable
-                    return newObservable
-                })())!
+                var value: Observable<Value?>?
+                
+                value = tsDictionary.read()[key]
+                
+                guard value == nil else { return value! }
+                
+                value = self.get(key)
+                    .do(onNext: { (_) in
+                        tsDictionary
+                            .mutate { exitingDictionary in
+                                var new = exitingDictionary
+                                new[key] = nil
+                                return new
+                        }
+                    }, onError: { (_) in
+                        tsDictionary
+                            .mutate { exitingDictionary in
+                                var new = exitingDictionary
+                                new[key] = nil
+                                return new
+                        }
+                    }, onCompleted: {
+                        tsDictionary
+                            .mutate { exitingDictionary in
+                                var new = exitingDictionary
+                                new[key] = nil
+                                return new
+                        }
+                    }, onDispose: {
+                        tsDictionary
+                            .mutate { exitingDictionary in
+                                var new = exitingDictionary
+                                new[key] = nil
+                                return new
+                        }
+                    })
+                    .share()
+                // all the interested parties for this particular resource will share a single subscription
+                
+                tsDictionary
+                    .mutate { exitingDictionary in
+                        var new = exitingDictionary
+                        new[key] = value
+                        return new
+                }
+                return value!
         },
             set: set,
             clear: clear
