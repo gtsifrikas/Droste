@@ -1,5 +1,12 @@
 language: objective-c
 osx_image: xcode11.3
-xcode_workspace: Example/Example.xcworkspace
-xcode_scheme: Example
-xcode_destination: platform=iOS Simulator,OS=13.2.2,name=iPhone 11 Pro
+env:
+- DESTINATION="OS=13.3,name=iPhone 11" SCHEME="Example" SDK=iphonesimulator
+podfile: Example/Podfile
+
+before_install:
+- gem uninstall cocoapods --all -aIx
+- gem install cocoapods
+
+script:
+- pod lib lint --allow-warnings --verbose
