@@ -10,7 +10,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import Droste
+@testable import DrosteSwift
 
 class SalientTests: QuickSpec {
     override func spec() {

@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import DrosteObjc
 
 public struct CacheDefaults {
     public static let defaultDiskCacheLocation = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.Droste.default")
@@ -222,6 +223,7 @@ final public class DiskCache<K, V>: ExpirableCache where K: StringConvertible, V
 
 extension NSKeyedUnarchiver {
     fileprivate static func unarchive(with filePath: String) -> Any? {
-        return self.unarchiveObjectSafely(withFilePath: filePath)
+        return nil
+//        return self.unarchiveObjectSafely(withFilePath: filePath)
     }
 }

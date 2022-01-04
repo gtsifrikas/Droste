@@ -11,7 +11,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import Droste
+@testable import DrosteSwift
 
 private func filesInDirectory(directory: String) -> [String] {
     let result = (try? FileManager.default.contentsOfDirectory(atPath: directory)) ?? []
@@ -224,7 +224,7 @@ class DiskCacheTests: QuickSpec {
                         }
                         
                         it("should remove all the files on disk") {
-                            expect(filesInDirectory(directory: path)).toEventually(beEmpty(), timeout: 10.0)
+                            expect(filesInDirectory(directory: path)).toEventually(beEmpty(), timeout: .seconds(10))
                         }
                         
                         context("when calling get") {
