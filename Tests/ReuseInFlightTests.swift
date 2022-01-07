@@ -8,7 +8,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import DrosteSwift
+@testable import Droste
 
 class ReuseInFlightTests: QuickSpec {
     override func spec() {

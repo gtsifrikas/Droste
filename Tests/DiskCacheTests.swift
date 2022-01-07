@@ -11,7 +11,7 @@ import Nimble
 import Quick
 import RxSwift
 import RxTest
-@testable import DrosteSwift
+@testable import Droste
 
 private func filesInDirectory(directory: String) -> [String] {
     let result = (try? FileManager.default.contentsOfDirectory(atPath: directory)) ?? []

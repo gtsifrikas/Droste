@@ -7,8 +7,9 @@ let package = Package(name: "Droste",
                       platforms: [.iOS(.v9)],
                       products: [
                         // Products define the executables and libraries a package produces, and make them visible to other packages.
-                        .library(name: "Droste",
-                                 targets: ["DrosteObjC", "DrosteSwift"])
+                        .library(name: "DrosteObjC", targets: ["DrosteObjC"]),
+                        .library(name: "Droste",  targets: ["Droste"])
+                        
                       ],
                       dependencies: [
                         .package(url: "https://github.com/ReactiveX/RxSwift.git", .upToNextMajor(from: "6.1.2")),
@@ -20,14 +21,14 @@ let package = Package(name: "Droste",
                         // Targets can depend on other targets in this package, and on products in packages this package depends on.
                         .target(name: "DrosteObjC",
                                 path: "Sources/DrosteObjC"),
-                        .target(name: "DrosteSwift",
+                        .target(name: "Droste",
                                 dependencies: [
-                                    "DrosteObjC",
+                                    .target(name: "DrosteObjC"),
                                     .product(name: "RxSwift", package: "RxSwift")
                                 ],
                                 path: "Sources/DrosteSwift"),
                         .testTarget(name: "DrosteTests",
-                                    dependencies: ["DrosteSwift",
+                                    dependencies: ["Droste",
                                                    .product(name: "RxTest", package: "RxSwift"),
                                                    "RxSwift",
                                                    "Nimble",

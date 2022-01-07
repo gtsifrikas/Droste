@@ -8,7 +8,7 @@
 
 import Foundation
 import RxSwift
-import DrosteSwift
+import Droste
 
 class AsyncCacheFake<K, V>: Cache, ExpirableCache {
     
