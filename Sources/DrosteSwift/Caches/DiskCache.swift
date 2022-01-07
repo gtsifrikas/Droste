@@ -8,7 +8,6 @@
 
 import Foundation
 import RxSwift
-import DrosteObjc
 
 public struct CacheDefaults {
     public static let defaultDiskCacheLocation = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0].appending("/com.Droste.default")
