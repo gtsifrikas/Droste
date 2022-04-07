@@ -10,8 +10,6 @@ import Foundation
 import RxSwift
 import Droste
 
-
-
 class AsyncCacheFake<K, V>: Cache, ExpirableCache {
     
     typealias Key = K

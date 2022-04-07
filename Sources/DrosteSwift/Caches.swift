@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 //some caches to use for common cases/examples
 public struct DrosteCaches {

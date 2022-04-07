@@ -234,7 +234,8 @@ class RetainTests: QuickSpec {
                 context("when the second request succeeds") {
                     beforeEach {
                         scheduler.scheduleAt(150) {
-                            Droste_Unit_Tests.wait(timeout: 2, pollInterval: 0.1, until: { () -> Bool in
+                            
+                            DrosteTests.wait(timeout: .seconds(2), pollInterval: 0.1, until: { () -> Bool in
                                 cache2.request != nil
                             }, then: {
                                 composedCache = nil // This is done to implicitely test instance retaining while a request to the second cache is pending
@@ -294,7 +295,7 @@ class RetainTests: QuickSpec {
                 context("when the second request fails without error") {
                     beforeEach {
                         scheduler.scheduleAt(150) {
-                            Droste_Unit_Tests.wait(timeout: 2, pollInterval: 0.1, until: { () -> Bool in
+                            DrosteTests.wait(timeout: .seconds(2), pollInterval: 0.1, until: { () -> Bool in
                                 cache2.request != nil
                             }, then: {
                                 composedCache = nil // This is done to implicitely test instance retaining while a request to the second cache is pending
@@ -355,7 +356,7 @@ class RetainTests: QuickSpec {
     }
 }
 
-func wait(timeout: TimeInterval = 2.0, pollInterval: TimeInterval = 1.0, file: FileString = #file, line: UInt = #line, until: @escaping () -> Bool, then: @escaping () -> Void) {
+func wait(timeout: DispatchTimeInterval = .seconds(2), pollInterval: TimeInterval = 1.0, file: FileString = #file, line: UInt = #line, until: @escaping () -> Bool, then: @escaping () -> Void) {
     let startedAt = Date()
     let backgroundQueue = DispatchQueue(label: "com.app.queue",
                                         qos: .userInitiated,
@@ -365,7 +366,7 @@ func wait(timeout: TimeInterval = 2.0, pollInterval: TimeInterval = 1.0, file: F
         backgroundQueue.async {
             while !until() {
                 Thread.sleep(forTimeInterval: pollInterval)
-                if abs(startedAt.timeIntervalSinceNow) > timeout {
+                if abs(startedAt.timeIntervalSinceNow) > (timeout.toTimeInterval() ?? 0) {
                     done()
                     return
                 }

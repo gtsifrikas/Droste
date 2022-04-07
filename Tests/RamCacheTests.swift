@@ -26,10 +26,9 @@ class RamCacheTests: QuickSpec {
             
             let key = "testKey"
             
-            
-            describe("on different threads", {
+            describe("on different threads") {
                 let queueScheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "test_async_queue")
-                context("when getting a value from different queue", {
+                context("when getting a value from different queue") {
                     beforeEach {
                         scheduler.scheduleAt(0) {
                             _ = sut.set(1, for: key).publish().connect()
@@ -42,8 +41,8 @@ class RamCacheTests: QuickSpec {
                         expect(cacheObserver.events.first?.value.element).toEventually(equal(1))
                         expect(cacheObserver.events).toEventually(haveCount(2))
                     }
-                })
-            })
+                }
+            }
             
             context("when calling get") {
                 beforeEach {
@@ -75,7 +74,7 @@ class RamCacheTests: QuickSpec {
                         expect(cacheObserver.events).toEventually(haveCount(2))
                     }
                     
-                    context("when using a different key", {
+                    context("when using a different key") {
                         beforeEach {
                             scheduler.scheduleAt(15) {
                                 _ = sut.get("a random key").subscribe(cacheObserver)
@@ -87,7 +86,7 @@ class RamCacheTests: QuickSpec {
                             expect(cacheObserver.events).toEventually(haveCount(4))
                             expect(cacheObserver.events[2].value.element!).toEventually(beNil())
                         }
-                    })
+                    }
                 }
                 
                 context("when cache does have a value but we query with different key than the saved one") {
